@@ -9,4 +9,4 @@
 hevm.libs.*
 **/artifacts/**
 outTests/*
-truffle_output/*
+truffle_output/*/out
