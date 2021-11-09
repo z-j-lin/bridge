@@ -1,3 +1,6 @@
 [submodule "lib/lib/ds-auth"]
 	path = lib/lib/ds-auth
 	url = https://github.com/dapphub/ds-auth
+[submodule "lib/lib/ds-math"]
+	path = lib/lib/ds-math
+	url = https://github.com/dapphub/ds-math
