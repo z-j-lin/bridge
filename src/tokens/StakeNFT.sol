@@ -34,8 +34,11 @@ contract StakeNFT is
     // 10**18
     uint256 constant _accumulatorScaleFactor = 1000000000000000000;
 
+    // enum for State loading
     uint8 constant _enumEthState = 0;
     uint8 constant _enumTokenState = 1;
+    
+    // enum for lock type
     uint8 constant _enumWithdrawLock = 2;
     uint8 constant _enumGovLock = 3;
     uint8 constant _enumMintLock = 4;
@@ -66,22 +69,11 @@ contract StakeNFT is
         uint256 slush;
     }
 
-    // _shares stores total amount of MadToken staked in contract
-    uint256 _shares;
-
-    // _tokenState tracks distribution of MadToken that originate from slashing
-    // events
-    Accumulator _tokenState;
-
-    // _ethState tracks the distribution of Eth that originate from the sale of
-    // MadBytes
-    Accumulator _ethState;
-
     // simple wrapper around MadToken ERC20 contract
     IERC20TransferMinimal _MadToken;
 
-    // _positions tracks all staked positions based on tokenID
-    mapping(uint256 => Position) _positions;
+    // _shares stores total amount of MadToken staked in contract
+    uint256 _shares;
 
     // state to keep track of the amount of Eth deposited and collected from the
     // contract
@@ -90,6 +82,17 @@ contract StakeNFT is
     // state to keep track of the amount of MadTokens deposited and collected
     // from the contract
     uint256 _reserveToken;
+
+        // _tokenState tracks distribution of MadToken that originate from slashing
+    // events
+    Accumulator _tokenState;
+
+    // _ethState tracks the distribution of Eth that originate from the sale of
+    // MadBytes
+    Accumulator _ethState;
+
+    // _positions tracks all staked positions based on tokenID
+    mapping(uint256 => Position) _positions;
 
     constructor(
         IERC20TransferMinimal MadToken_,
@@ -161,21 +164,6 @@ contract StakeNFT is
         numberShares = _lockPosition(tokenID_, lockDuration_, _enumGovLock);
     }
 
-    /// estimateExcessToken returns the amount of MadToken that is held in the
-    /// name of this contract. The value returned is the value that would be
-    /// returned by a call to skimExcessToken.
-    function estimateExcessToken() public view returns (uint256 excess) {
-        (, excess) = _estimateExcessToken();
-        return excess;
-    }
-
-    /// estimateExcessEth returns the amount of Eth that is held in the name of
-    /// this contract. The value returned is the value that would be returned by
-    /// a call to skimExcessEth.
-    function estimateExcessEth() public view returns (uint256 excess) {
-        excess = _estimateExcessEth();
-    }
-
     /// skimExcessEth will send to the address passed as to_ any amount of Eth
     /// held by this contract that is not tracked by the Accumulator system. This
     /// function allows the Admin role to refund any Eth sent to this contract in
@@ -207,6 +195,21 @@ contract StakeNFT is
         (MadToken, excess) = _estimateExcessToken();
         _safeTransferERC20(MadToken, to_, excess);
         return excess;
+    }
+
+    /// estimateExcessToken returns the amount of MadToken that is held in the
+    /// name of this contract. The value returned is the value that would be
+    /// returned by a call to skimExcessToken.
+    function estimateExcessToken() public view returns (uint256 excess) {
+        (, excess) = _estimateExcessToken();
+        return excess;
+    }
+
+    /// estimateExcessEth returns the amount of Eth that is held in the name of
+    /// this contract. The value returned is the value that would be returned by
+    /// a call to skimExcessEth.
+    function estimateExcessEth() public view returns (uint256 excess) {
+        excess = _estimateExcessEth();
     }
 
     /// gets the _accumulatorScaleFactor used to scale the ether and tokens
