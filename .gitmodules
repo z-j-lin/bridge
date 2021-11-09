@@ -7,3 +7,6 @@
 [submodule "lib/lib/ds-note"]
 	path = lib/lib/ds-note
 	url = https://github.com/dapphub/ds-note
+[submodule "lib/lib/ds-stop"]
+	path = lib/lib/ds-stop
+	url = https://github.com/dapphub/ds-stop
