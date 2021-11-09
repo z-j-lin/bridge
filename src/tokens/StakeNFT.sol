@@ -555,14 +555,8 @@ contract StakeNFT is
     // _collect performs calculations necessary to determine any distributions
     // due to an account such that it may be used for both token and eth
     // distributions this prevents the need to keep redundant logic
-    function _collect(
-        uint256 shares_,
-        Accumulator memory state_,
-        Position memory p_,
-        uint256 positionAccumulatorValue_
-    )
-        internal
-        pure
+    function _collect(uint256 shares_, Accumulator memory state_, Position memory p_, uint256 positionAccumulatorValue_)
+        internal pure
         returns (
             Accumulator memory,
             Position memory,
@@ -607,7 +601,8 @@ contract StakeNFT is
         uint256 shares_,
         uint256 delta_,
         Accumulator memory state_
-    ) internal pure returns (Accumu_mintNFTlator memory) {
+    ) internal pure returns (Accumulator memory) {
+        
         state_.slush += (delta_ * _accumulatorScaleFactor);
         //state_.slush = (state_.slush + delta_) * _accumulatorScaleFactor;
         if (shares_ > 0) {
