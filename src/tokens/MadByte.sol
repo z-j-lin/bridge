@@ -16,6 +16,13 @@ contract MadByte is
     EthSafeTransfer,
     Sigmoid
 {
+
+    // multiply factor for the selling/minting bonding curve
+    uint256 constant marketSpread = 4;
+
+    // Scaling factor to get the staking percentages
+    uint256 constant madUnitOne = 1000;
+
     /// @notice Event emitted when a deposit is received
     event DepositReceived(
         uint256 indexed depositID,
@@ -31,11 +38,20 @@ contract MadByte is
         uint256 amount
     );
 
-    // multiply factor for the selling/minting bonding curve
-    uint256 constant marketSpread = 4;
+    // struct to define a BNAddress
+    struct BNAddress {
+        uint256 to0;
+        uint256 to1;
+        uint256 to2;
+        uint256 to3;
+    }
 
-    // Scaling factor to get the staking percentages
-    uint256 constant madUnitOne = 1000;
+    // Staking contracts addresses
+    IMagicEthTransfer _madStaking;
+    IMagicEthTransfer _minerStaking;
+    IMagicEthTransfer _lpStaking;
+    // Foundation contract address
+    IMagicEthTransfer _foundation;
 
     // Balance in ether that is hold in the contract after minting and burning
     uint256 _poolBalance = 0;
@@ -48,13 +64,6 @@ contract MadByte is
     uint256 _lpStakingSplit = 332;
     uint256 _protocolFee = 3;
 
-    // struct to define a BNAddress
-    struct BNAddress {
-        uint256 to0;
-        uint256 to1;
-        uint256 to2;
-        uint256 to3;
-    }
 
     // Monotonically increasing variable to track the MadBytes deposits.
     uint256 _depositID = 0;
@@ -72,13 +81,6 @@ contract MadByte is
     // of owners with BN addresses. Key is deposit id, value is the BN address
     // (4x bytes32) of owner of a deposit.
     mapping(uint256 => BNAddress) _depositorsBN;
-
-    // Staking contracts addresses
-    IMagicEthTransfer _madStaking;
-    IMagicEthTransfer _minerStaking;
-    IMagicEthTransfer _lpStaking;
-    // Foundation contract address
-    IMagicEthTransfer _foundation;
 
     constructor(
         address admin_,
