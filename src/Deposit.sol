@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT-open-group
-pragma solidity >= 0.5.15;
+pragma solidity >=0.5.15;
 
 import "../lib/ds-stop/stop.sol";
 
@@ -10,8 +10,13 @@ import "./Constants.sol";
 import "./Registry.sol";
 import "./SafeMath.sol";
 
-contract Deposit is Constants, DSStop, RegistryClient, SimpleAuth, ValidatorsEvents {
-
+contract Deposit is
+    Constants,
+    DSStop,
+    RegistryClient,
+    SimpleAuth,
+    ValidatorsEvents
+{
     /// @notice Event emitted when a deposit is received
     event DepositReceived(uint256 depositID, address depositor, uint256 amount);
 
@@ -23,15 +28,16 @@ contract Deposit is Constants, DSStop, RegistryClient, SimpleAuth, ValidatorsEve
 
     struct DepositStorage {
         uint256 totalDeposited;
-        uint256 depositID;                     // Monatomically increasing
-        mapping(uint256 => uint256) deposits;  // Key is deposit id, value is amount deposited
+        uint256 depositID; // Monatomically increasing
+        mapping(uint256 => uint256) deposits; // Key is deposit id, value is amount deposited
         mapping(uint256 => address) depositor; // Key is deposit id, value is who deposited
-        BasicERC20 token;                      // Minting only required for migration
+        BasicERC20 token; // Minting only required for migration
     }
 
     function depositStorage() internal pure returns (DepositStorage storage s) {
         bytes32 position = STORAGE_LOCATION;
-        assembly { // solium-disable-line
+        assembly {
+            // solium-disable-line
             s.slot := position
         }
     }
@@ -54,7 +60,12 @@ contract Deposit is Constants, DSStop, RegistryClient, SimpleAuth, ValidatorsEve
         return _deposit(msg.sender, amount);
     }
 
-    function depositFor(address who, uint256 amount) external stoppable returns (bool) {
+    //TODO: fix WHO
+    function depositFor(address who, uint256 amount)
+        external
+        stoppable
+        returns (bool)
+    {
         return _deposit(msg.sender, amount);
     }
 
@@ -69,7 +80,10 @@ contract Deposit is Constants, DSStop, RegistryClient, SimpleAuth, ValidatorsEve
 
         ds.depositID = ds.depositID.add(1);
 
-        require(ds.token.transferFrom(who, address(this), amount), "Transfer failed");
+        require(
+            ds.token.transferFrom(who, address(this), amount),
+            "Transfer failed"
+        );
 
         return true;
     }
@@ -79,7 +93,6 @@ contract Deposit is Constants, DSStop, RegistryClient, SimpleAuth, ValidatorsEve
         address who,
         uint256 amount
     ) external stoppable onlyOperator returns (bool) {
-
         emit DepositReceived(_depositID, who, amount);
 
         DepositStorage storage ds = depositStorage();
@@ -116,5 +129,4 @@ contract Deposit is Constants, DSStop, RegistryClient, SimpleAuth, ValidatorsEve
     function totalDeposited() external view returns (uint256) {
         return depositStorage().totalDeposited;
     }
-
 }

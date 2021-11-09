@@ -45,9 +45,8 @@ import "src/diamonds/interfaces/Sudo.sol";
 import "src/diamonds/interfaces/ValidatorLocations.sol";
 
 contract Setup is Constants {
-
-    uint constant INITIAL_AMOUNT = 1_000_000_000_000_000_000_000_000;
-    uint constant MINIMUM_STAKE = 999_999_999;
+    uint256 constant INITIAL_AMOUNT = 1_000_000_000_000_000_000_000_000;
+    uint256 constant MINIMUM_STAKE = 999_999_999;
 
     Registry registry;
 
@@ -97,7 +96,6 @@ contract Setup is Constants {
         snapshots.initializeSnapshots(registry);
         staking.initializeStaking(registry);
 
-
         // Base scenario setup
         stakingToken.approve(address(staking), INITIAL_AMOUNT);
         utilityToken.approve(address(staking), INITIAL_AMOUNT);
@@ -112,11 +110,13 @@ contract Setup is Constants {
 
     function setUpMisc(Registry _registry, address _stakeToken) public {
         _registry.register(STAKING_TOKEN, _stakeToken);
-        _registry.register(UTILITY_TOKEN, address(new Token("UTL", "MadBytes")));
+        _registry.register(
+            UTILITY_TOKEN,
+            address(new Token("UTL", "MadBytes"))
+        );
     }
 
     function setUpValidators(Registry _registry) public {
-
         address diamond = address(new ValidatorsDiamond());
         DiamondUpdateFacet update = DiamondUpdateFacet(diamond);
 
@@ -125,8 +125,12 @@ contract Setup is Constants {
         address snapshotsFacet = address(new SnapshotsFacet());
         address stakingFacet = address(new StakingFacet());
         address sudoFacet = address(new SudoFacet());
-        address accusationMultipleProposalFacet = address(new AccusationMultipleProposalFacet());
-        address accusationInvalidTransactionConsumptionFacet = address(new AccusationInvalidTransactionConsumptionFacet());
+        address accusationMultipleProposalFacet = address(
+            new AccusationMultipleProposalFacet()
+        );
+        address accusationInvalidTransactionConsumptionFacet = address(
+            new AccusationInvalidTransactionConsumptionFacet()
+        );
 
         // SnapshotFacet Wiring
         update.addFacet(Snapshots.initializeSnapshots.selector, snapshotsFacet);
@@ -135,18 +139,36 @@ contract Setup is Constants {
         update.addFacet(Snapshots.extractUint32.selector, snapshotsFacet);
         update.addFacet(Snapshots.setEpoch.selector, snapshotsFacet);
         update.addFacet(Snapshots.snapshot.selector, snapshotsFacet);
-        update.addFacet(Snapshots.getRawSignatureSnapshot.selector, snapshotsFacet);
-        update.addFacet(Snapshots.getRawBlockClaimsSnapshot.selector, snapshotsFacet);
-        update.addFacet(Snapshots.getMadHeightFromSnapshot.selector, snapshotsFacet);
-        update.addFacet(Snapshots.getHeightFromSnapshot.selector, snapshotsFacet);
-        update.addFacet(Snapshots.getChainIdFromSnapshot.selector, snapshotsFacet);
+        update.addFacet(
+            Snapshots.getRawSignatureSnapshot.selector,
+            snapshotsFacet
+        );
+        update.addFacet(
+            Snapshots.getRawBlockClaimsSnapshot.selector,
+            snapshotsFacet
+        );
+        update.addFacet(
+            Snapshots.getMadHeightFromSnapshot.selector,
+            snapshotsFacet
+        );
+        update.addFacet(
+            Snapshots.getHeightFromSnapshot.selector,
+            snapshotsFacet
+        );
+        update.addFacet(
+            Snapshots.getChainIdFromSnapshot.selector,
+            snapshotsFacet
+        );
 
         // StakingFacet Wiring
         update.addFacet(Staking.initializeStaking.selector, stakingFacet);
         update.addFacet(Staking.balanceRewardFor.selector, stakingFacet);
         update.addFacet(Staking.balanceStakeFor.selector, stakingFacet);
         update.addFacet(Staking.balanceUnlockedFor.selector, stakingFacet);
-        update.addFacet(Staking.balanceUnlockedRewardFor.selector, stakingFacet);
+        update.addFacet(
+            Staking.balanceUnlockedRewardFor.selector,
+            stakingFacet
+        );
         update.addFacet(Staking.lockRewardFor.selector, stakingFacet);
         update.addFacet(Staking.lockStake.selector, stakingFacet);
         update.addFacet(Staking.lockStakeFor.selector, stakingFacet);
@@ -161,22 +183,45 @@ contract Setup is Constants {
         update.addFacet(Staking.burn.selector, stakingFacet);
 
         // Accusation Wiring
-        update.addFacet(Accusation.AccuseMultipleProposal.selector, accusationMultipleProposalFacet);
-        update.addFacet(Accusation.AccuseInvalidTransactionConsumption.selector, accusationInvalidTransactionConsumptionFacet);
+        update.addFacet(
+            Accusation.AccuseMultipleProposal.selector,
+            accusationMultipleProposalFacet
+        );
+        update.addFacet(
+            Accusation.AccuseInvalidTransactionConsumption.selector,
+            accusationInvalidTransactionConsumptionFacet
+        );
 
         // ParticipantsFacet Wiring
-        update.addFacet(Participants.initializeParticipants.selector, participantsFacet);
+        update.addFacet(
+            Participants.initializeParticipants.selector,
+            participantsFacet
+        );
         update.addFacet(Participants.addValidator.selector, participantsFacet);
-        update.addFacet(Participants.confirmValidators.selector, participantsFacet);
+        update.addFacet(
+            Participants.confirmValidators.selector,
+            participantsFacet
+        );
         update.addFacet(Participants.getValidators.selector, participantsFacet);
-        update.addFacet(Participants.getValidatorPublicKey.selector, participantsFacet);
+        update.addFacet(
+            Participants.getValidatorPublicKey.selector,
+            participantsFacet
+        );
         update.addFacet(Participants.isValidator.selector, participantsFacet);
-        update.addFacet(Participants.removeValidator.selector, participantsFacet);
-        update.addFacet(Participants.setValidatorMaxCount.selector, participantsFacet);
-        update.addFacet(Participants.validatorCount.selector, participantsFacet);
+        update.addFacet(
+            Participants.removeValidator.selector,
+            participantsFacet
+        );
+        update.addFacet(
+            Participants.setValidatorMaxCount.selector,
+            participantsFacet
+        );
+        update.addFacet(
+            Participants.validatorCount.selector,
+            participantsFacet
+        );
         update.addFacet(Participants.getChainId.selector, participantsFacet);
         update.addFacet(Participants.setChainId.selector, participantsFacet);
-
 
         // SudoFacet Wiring
         update.addFacet(Sudo.modifyDiamondStorage.selector, sudoFacet);
@@ -186,7 +231,6 @@ contract Setup is Constants {
     }
 
     function setUpEthDKG(Registry _registry) public {
-
         address diamond = address(new EthDKGDiamond());
         DiamondUpdateFacet update = DiamondUpdateFacet(diamond);
 
@@ -202,7 +246,10 @@ contract Setup is Constants {
 
         // Wiring facets
         update.addFacet(ETHDKG.Group_Accusation_GPKj.selector, accusationFacet);
-        update.addFacet(ETHDKG.Group_Accusation_GPKj_Comp.selector, accusationFacet);
+        update.addFacet(
+            ETHDKG.Group_Accusation_GPKj_Comp.selector,
+            accusationFacet
+        );
 
         update.addFacet(ETHDKG.Successful_Completion.selector, completionFacet);
         update.addFacet(ETHDKG.initializeEthDKG.selector, initFacet);
@@ -225,7 +272,6 @@ contract Setup is Constants {
 
         _registry.register(ETHDKG_CONTRACT, diamond);
     }
-
 }
 
 contract MadTokenMock is ERC20 {
@@ -235,18 +281,25 @@ contract MadTokenMock is ERC20 {
 }
 
 contract MinerStake is INFTStake {
-
     StakeNFT stakeNFT;
 
     constructor(StakeNFT stakeNFT_) {
         stakeNFT = stakeNFT_;
     }
 
-    function lockPosition(address caller_, uint256 tokenID_, uint256 lockDuration_) external override returns(uint256 numberShares) {
+    function lockPosition(
+        address caller_,
+        uint256 tokenID_,
+        uint256 lockDuration_
+    ) external override returns (uint256 numberShares) {
         return stakeNFT.lockPosition(caller_, tokenID_, lockDuration_);
     }
 
-    function mintTo(address to_, uint256 amount_, uint256 lockDuration_) public returns(uint256 tokenID) {
+    function mintTo(
+        address to_,
+        uint256 amount_,
+        uint256 lockDuration_
+    ) public returns (uint256 tokenID) {
         return stakeNFT.mintTo(to_, amount_, lockDuration_);
     }
 }
@@ -256,7 +309,11 @@ abstract contract BaseMock {
     MadTokenMock public madToken;
     GovernanceManager public governanceManager;
 
-    function setTokens(MadTokenMock madToken_, StakeNFT stakeNFT_, GovernanceManager governanceManager_) public virtual {
+    function setTokens(
+        MadTokenMock madToken_,
+        StakeNFT stakeNFT_,
+        GovernanceManager governanceManager_
+    ) public virtual {
         stakeNFT = stakeNFT_;
         madToken = madToken_;
         governanceManager = governanceManager_;
@@ -272,7 +329,11 @@ contract AdminAccount is BaseMock {
         stakeNFT.tripCB();
     }
 
-    function setTokens(MadTokenMock madToken_, StakeNFT stakeNFT_, GovernanceManager governanceManager_) public override virtual {
+    function setTokens(
+        MadTokenMock madToken_,
+        StakeNFT stakeNFT_,
+        GovernanceManager governanceManager_
+    ) public virtual override {
         stakeNFT = stakeNFT_;
         madToken = madToken_;
         governanceManager = governanceManager_;
@@ -297,36 +358,47 @@ contract UserAccount is BaseMock {
 }
 
 contract GovernanceProposeModifySnapshot is GovernanceProposal {
-
-    function execute(address self) public override returns(bool) {
+    function execute(address self) public override returns (bool) {
         address target = 0xE9E697933260a720d42146268B2AAAfA4211DE1C;
-        (bool success, ) = target.call(abi.encodeWithSignature("modifyDiamondStorage(address)", self));
+        (bool success, ) = target.call(
+            abi.encodeWithSignature("modifyDiamondStorage(address)", self)
+        );
         require(success, "CALL FAILED");
         return success;
     }
 
-    function callback() public override returns(bool) {
-        SnapshotsLibrary.SnapshotsStorage storage s = SnapshotsLibrary.snapshotsStorage();
-        ChainStatusLibrary.ChainStatusStorage storage cs = ChainStatusLibrary.chainStatusStorage();
+    function callback() public override returns (bool) {
+        SnapshotsLibrary.SnapshotsStorage storage s = SnapshotsLibrary
+            .snapshotsStorage();
+        ChainStatusLibrary.ChainStatusStorage storage cs = ChainStatusLibrary
+            .chainStatusStorage();
         cs.epoch = 666;
         bytes memory sig = "0xbeefdead";
         bytes memory bclaims = "0xdeadbeef";
-        s.snapshots[1] = SnapshotsLibrary.Snapshot(true, 123, bclaims, sig, 456, 789);
+        s.snapshots[1] = SnapshotsLibrary.Snapshot(
+            true,
+            123,
+            bclaims,
+            sig,
+            456,
+            789
+        );
         return true;
     }
 }
 
 contract GovernanceProposeModifySnapshotCopy is GovernanceProposal {
-
     // PROPOSALS MUST NOT HAVE ANY STATE VARIABLE TO AVOID POTENTIAL STORAGE
     // COLLISION!
 
     /// @dev function that is called when a proposal is executed. It's only
     /// meant to be called by the Governance Manager contract. See the
     /// GovernanceProposal.sol file fore more details.
-    function execute(address self) public override returns(bool) {
+    function execute(address self) public override returns (bool) {
         address target = 0xE9E697933260a720d42146268B2AAAfA4211DE1C;
-        (bool success, ) = target.call(abi.encodeWithSignature("modifyDiamondStorage(address)", self));
+        (bool success, ) = target.call(
+            abi.encodeWithSignature("modifyDiamondStorage(address)", self)
+        );
         require(success, "GovernanceProposeModifySnapshot: CALL FAILED!");
         return success;
     }
@@ -334,7 +406,7 @@ contract GovernanceProposeModifySnapshotCopy is GovernanceProposal {
     /// @dev function that is called back by another contract with DELEGATE CALL
     /// rights! See the GovernanceProposal.sol file fore more details. PLACE THE
     /// SNAPSHOT REPLACEMENT LOGIC IN HERE!
-    function callback() public override returns(bool) {
+    function callback() public override returns (bool) {
         // This function is called back by the Validators Diamond. Inside this
         // function, we have fully access to all the Validators Diamond Storage
         // including the the snapshots mapping arbitrarily.
@@ -349,67 +421,89 @@ contract GovernanceProposeModifySnapshotCopy is GovernanceProposal {
 }
 
 contract TryModifyStakeAfterStorage is GovernanceProposal {
-
-    function execute(address self) public override returns(bool) {
+    function execute(address self) public override returns (bool) {
         address target = 0xE9E697933260a720d42146268B2AAAfA4211DE1C;
-        (bool success, ) = target.call(abi.encodeWithSignature("modifyDiamondStorage(address)", self));
+        (bool success, ) = target.call(
+            abi.encodeWithSignature("modifyDiamondStorage(address)", self)
+        );
         require(success, "CALL FAILED");
         return success;
     }
 
-    function callback() public override returns(bool) {
+    function callback() public override returns (bool) {
         // assume we update the diamond storage here
 
         // now we lock some staking position
-        StakeNFT stake = StakeNFT(address(0xB85bEA9a5a75c5Daf146dBab68B3a9661682c0b8));
-        stake.lockPosition(address(0xd5D575E71245442009EE208E8DCEBFbcF958b8B6), 1, 10);
+        StakeNFT stake = StakeNFT(
+            address(0xB85bEA9a5a75c5Daf146dBab68B3a9661682c0b8)
+        );
+        stake.lockPosition(
+            address(0xd5D575E71245442009EE208E8DCEBFbcF958b8B6),
+            1,
+            10
+        );
         return true;
     }
 }
 
 contract ModifyStakeAfterStorage is GovernanceProposal {
-
-    function execute(address self) public override returns(bool) {
+    function execute(address self) public override returns (bool) {
         address target = 0xE9E697933260a720d42146268B2AAAfA4211DE1C;
         allowedProposal = target;
-        (bool success, ) = target.call(abi.encodeWithSignature("modifyDiamondStorage(address)", self));
+        (bool success, ) = target.call(
+            abi.encodeWithSignature("modifyDiamondStorage(address)", self)
+        );
         require(success, "CALL FAILED");
         return success;
     }
 
-    function callback() public override returns(bool) {
+    function callback() public override returns (bool) {
         // assume we update the diamond storage here
 
         // now we lock some staking position
-        StakeNFT stake = StakeNFT(address(0xe36D078E72C5BD2386d2bFB68573f0699B64c70C));
-        stake.lockPosition(address(0xF34003B00A3DbF6253Dd679F6BAe1c1e9992A7D1), 1, 10);
+        StakeNFT stake = StakeNFT(
+            address(0xe36D078E72C5BD2386d2bFB68573f0699B64c70C)
+        );
+        stake.lockPosition(
+            address(0xF34003B00A3DbF6253Dd679F6BAe1c1e9992A7D1),
+            1,
+            10
+        );
         return true;
     }
 }
 
 contract DoSomething {
-
     function something() public {
-        StakeNFT stake = StakeNFT(address(0xe36D078E72C5BD2386d2bFB68573f0699B64c70C));
-        stake.lockPosition(address(0x0aA3c032A48098855b3fA7410A33A120b34FB57D), 1, 10);
+        StakeNFT stake = StakeNFT(
+            address(0xe36D078E72C5BD2386d2bFB68573f0699B64c70C)
+        );
+        stake.lockPosition(
+            address(0x0aA3c032A48098855b3fA7410A33A120b34FB57D),
+            1,
+            10
+        );
     }
 }
 
 contract ModifyStakeAfterStorageFromOutside is GovernanceProposal {
-
-    function execute(address self) public override returns(bool) {
-        address target = 0xE9E697933260a720d42146268B2AAAfA4211DE1C;//0xEAC31aabA7442B58Bd7A8431d1D3Db3Bf3262667;
+    function execute(address self) public override returns (bool) {
+        address target = 0xE9E697933260a720d42146268B2AAAfA4211DE1C; //0xEAC31aabA7442B58Bd7A8431d1D3Db3Bf3262667;
         allowedProposal = address(0xd5D575E71245442009EE208E8DCEBFbcF958b8B6);
-        (bool success, ) = target.call(abi.encodeWithSignature("modifyDiamondStorage(address)", self));
+        (bool success, ) = target.call(
+            abi.encodeWithSignature("modifyDiamondStorage(address)", self)
+        );
         require(success, "CALL FAILED");
         return success;
     }
 
-    function callback() public override returns(bool) {
+    function callback() public override returns (bool) {
         // assume we update the diamond storage here
 
         // now we lock some staking position
-        DoSomething x = DoSomething(address(0xd5D575E71245442009EE208E8DCEBFbcF958b8B6));
+        DoSomething x = DoSomething(
+            address(0xd5D575E71245442009EE208E8DCEBFbcF958b8B6)
+        );
         x.something();
 
         return true;
@@ -429,29 +523,40 @@ contract GovernanceProposeModifySnapshotTest is DSTest, Setup {
             GovernanceManager governanceManager
         )
     {
-
         admin = new AdminAccount();
         AdminAccount adminMiner = new AdminAccount();
         madToken = new MadTokenMock(address(this));
         stakeNFT = new StakeNFT(
-            IERC20Transfer(address(madToken)),
+            IERC20TransferMinimal(address(madToken)),
             address(admin),
             address(address(0x0))
         );
-        minerStake = MinerStake(address (new StakeNFT(
-            IERC20Transfer(address(madToken)),
-            address(adminMiner),
-            address(address(0x0))
-        )));
-        governanceManager = new GovernanceManager(address(stakeNFT), address(minerStake));
+        minerStake = MinerStake(
+            address(
+                new StakeNFT(
+                    IERC20TransferMinimal(address(madToken)),
+                    address(adminMiner),
+                    address(address(0x0))
+                )
+            )
+        );
+        governanceManager = new GovernanceManager(
+            address(stakeNFT),
+            address(minerStake)
+        );
         admin.setTokens(madToken, stakeNFT, governanceManager);
-        adminMiner.setTokens(madToken, StakeNFT(address(minerStake)), governanceManager);
+        adminMiner.setTokens(
+            madToken,
+            StakeNFT(address(minerStake)),
+            governanceManager
+        );
     }
 
-    function newUserAccount(MadTokenMock madToken, StakeNFT stakeNFT, GovernanceManager governanceManager)
-        private
-        returns (UserAccount acct)
-    {
+    function newUserAccount(
+        MadTokenMock madToken,
+        StakeNFT stakeNFT,
+        GovernanceManager governanceManager
+    ) private returns (UserAccount acct) {
         acct = new UserAccount();
         acct.setTokens(madToken, stakeNFT, governanceManager);
     }
@@ -461,14 +566,18 @@ contract GovernanceProposeModifySnapshotTest is DSTest, Setup {
         address externalContract = address(
             0x7109709ECfa91a80626fF3989D68f67F5b1DD12D
         );
-        (bool success, /*bytes memory returnedData*/) = externalContract.call(
-            abi.encodeWithSignature("roll(uint256)", bn)
-        );
+        (
+            bool success, /*bytes memory returnedData*/
+
+        ) = externalContract.call(abi.encodeWithSignature("roll(uint256)", bn));
 
         return success;
     }
 
-    function assertProposal(GovernanceStorage.Proposal memory actual, GovernanceStorage.Proposal memory expected) public {
+    function assertProposal(
+        GovernanceStorage.Proposal memory actual,
+        GovernanceStorage.Proposal memory expected
+    ) public {
         assertTrue(actual.executed == expected.executed);
         assertEq(actual.logic, expected.logic);
         assertEq(actual.voteCount, expected.voteCount);
@@ -490,33 +599,36 @@ contract GovernanceProposeModifySnapshotTest is DSTest, Setup {
         uint256 proposalID = governanceManager.propose(address(logic));
         assertProposal(
             governanceManager.getProposal(proposalID),
-            GovernanceStorage.Proposal(
-                false,
-                address(logic),
-                0,
-                172800
-            )
+            GovernanceStorage.Proposal(false, address(logic), 0, 172800)
         );
         assertTrue(!governanceManager.isProposalExecuted(proposalID));
         // We can only vote after 1 block has passed from the proposal creation
-        setBlockNumber(block.number +1);
-        for (uint256 i =0; i < 10; i++){
-            UserAccount user = newUserAccount(madToken, stakeNFT, governanceManager);
+        setBlockNumber(block.number + 1);
+        for (uint256 i = 0; i < 10; i++) {
+            UserAccount user = newUserAccount(
+                madToken,
+                stakeNFT,
+                governanceManager
+            );
             madToken.approve(address(stakeNFT), 11_220_000 * 10**18);
-            uint256 tokenID = stakeNFT.mintTo(address(user), 11_220_000 * 10**18, 1);
+            uint256 tokenID = stakeNFT.mintTo(
+                address(user),
+                11_220_000 * 10**18,
+                1
+            );
             user.voteAsStaker(proposalID, tokenID);
         }
 
-        bytes memory bclaims =
-            hex"00000000010004002a000000050000000d000000020100001900000002010000"
+        bytes
+            memory bclaims = hex"00000000010004002a000000050000000d000000020100001900000002010000"
             hex"250000000201000031000000020100007565a2d7195f43727e1141f00228fd60"
             hex"da3ca7ada3fc0a5a34ea537e0cb82e8dc5d2460186f7233c927e7db2dcc703c0"
             hex"e500b653ca82273b7bfad8045d85a47000000000000000000000000000000000"
             hex"00000000000000000000000000000000ede353f57b9e2599f9165fde4ec80b60"
             hex"0e9c20418aa3f4d3d6aabee6981abff6";
 
-        bytes memory signatureGroup =
-            hex"2ee01ec6218252b7e263cb1d86e6082f7e05e0c86b17607c5490cd2a73ac14f6"
+        bytes
+            memory signatureGroup = hex"2ee01ec6218252b7e263cb1d86e6082f7e05e0c86b17607c5490cd2a73ac14f6"
             hex"2cc0679acd5fb16c0c983806d13127354423e908fec273db1fc62c38fcee59d5"
             hex"2570a1763029316ee5cb6e44a74039f15935f110898ad495ffe837335ced059d"
             hex"0d426710c8a650cf96de6462406c3b707d4d1ae2231f3206c57b6551e12f593c"
@@ -574,20 +686,23 @@ contract GovernanceProposeModifySnapshotTest is DSTest, Setup {
         uint256 proposalID = governanceManager.propose(address(logic));
         assertProposal(
             governanceManager.getProposal(proposalID),
-            GovernanceStorage.Proposal(
-                false,
-                address(logic),
-                0,
-                172800
-            )
+            GovernanceStorage.Proposal(false, address(logic), 0, 172800)
         );
         assertTrue(!governanceManager.isProposalExecuted(proposalID));
         // We can only vote after 1 block has passed from the proposal creation
-        setBlockNumber(block.number +1);
-        for (uint256 i =0; i < 10; i++){
-            UserAccount user = newUserAccount(madToken, stakeNFT, governanceManager);
+        setBlockNumber(block.number + 1);
+        for (uint256 i = 0; i < 10; i++) {
+            UserAccount user = newUserAccount(
+                madToken,
+                stakeNFT,
+                governanceManager
+            );
             madToken.approve(address(stakeNFT), 11_220_000 * 10**18);
-            uint256 tokenID = stakeNFT.mintTo(address(user), 11_220_000 * 10**18, 1);
+            uint256 tokenID = stakeNFT.mintTo(
+                address(user),
+                11_220_000 * 10**18,
+                1
+            );
             user.voteAsStaker(proposalID, tokenID);
         }
 
@@ -618,20 +733,23 @@ contract GovernanceProposeModifySnapshotTest is DSTest, Setup {
         uint256 proposalID = governanceManager.propose(address(logic));
         assertProposal(
             governanceManager.getProposal(proposalID),
-            GovernanceStorage.Proposal(
-                false,
-                address(logic),
-                0,
-                172800
-            )
+            GovernanceStorage.Proposal(false, address(logic), 0, 172800)
         );
         assertTrue(!governanceManager.isProposalExecuted(proposalID));
         // We can only vote after 1 block has passed from the proposal creation
-        setBlockNumber(block.number +1);
-        for (uint256 i =0; i < 10; i++){
-            UserAccount user = newUserAccount(madToken, stakeNFT, governanceManager);
+        setBlockNumber(block.number + 1);
+        for (uint256 i = 0; i < 10; i++) {
+            UserAccount user = newUserAccount(
+                madToken,
+                stakeNFT,
+                governanceManager
+            );
             madToken.approve(address(stakeNFT), 11_220_000 * 10**18);
-            uint256 tokenID = stakeNFT.mintTo(address(user), 11_220_000 * 10**18, 1);
+            uint256 tokenID = stakeNFT.mintTo(
+                address(user),
+                11_220_000 * 10**18,
+                1
+            );
             user.voteAsStaker(proposalID, tokenID);
         }
 
@@ -645,7 +763,9 @@ contract GovernanceProposeModifySnapshotTest is DSTest, Setup {
         sudo.modifyDiamondStorage(address(this));
     }
 
-    function testFail_ExecuteModifyStakeAfterStorageWithoutGovernanceOnCallback() public {
+    function testFail_ExecuteModifyStakeAfterStorageWithoutGovernanceOnCallback()
+        public
+    {
         (
             StakeNFT stakeNFT,
             MinerStake minerStake,
@@ -660,21 +780,24 @@ contract GovernanceProposeModifySnapshotTest is DSTest, Setup {
         uint256 proposalID = governanceManager.propose(address(logic));
         assertProposal(
             governanceManager.getProposal(proposalID),
-            GovernanceStorage.Proposal(
-                false,
-                address(logic),
-                0,
-                172800
-            )
+            GovernanceStorage.Proposal(false, address(logic), 0, 172800)
         );
         assertTrue(!governanceManager.isProposalExecuted(proposalID));
         // We can only vote after 1 block has passed from the proposal creation
-        setBlockNumber(block.number +1);
-        for (uint256 i =0; i < 10; i++){
-            UserAccount user = newUserAccount(madToken, stakeNFT, governanceManager);
+        setBlockNumber(block.number + 1);
+        for (uint256 i = 0; i < 10; i++) {
+            UserAccount user = newUserAccount(
+                madToken,
+                stakeNFT,
+                governanceManager
+            );
             //emit log_named_address("user", address(user));
             madToken.approve(address(stakeNFT), 11_220_000 * 10**18);
-            uint256 tokenID = stakeNFT.mintTo(address(user), 11_220_000 * 10**18, 1);
+            uint256 tokenID = stakeNFT.mintTo(
+                address(user),
+                11_220_000 * 10**18,
+                1
+            );
             user.voteAsStaker(proposalID, tokenID);
         }
 
@@ -699,21 +822,24 @@ contract GovernanceProposeModifySnapshotTest is DSTest, Setup {
         uint256 proposalID = governanceManager.propose(address(logic));
         assertProposal(
             governanceManager.getProposal(proposalID),
-            GovernanceStorage.Proposal(
-                false,
-                address(logic),
-                0,
-                172800
-            )
+            GovernanceStorage.Proposal(false, address(logic), 0, 172800)
         );
         assertTrue(!governanceManager.isProposalExecuted(proposalID));
         // We can only vote after 1 block has passed from the proposal creation
-        setBlockNumber(block.number +1);
-        for (uint256 i =0; i < 10; i++){
-            UserAccount user = newUserAccount(madToken, stakeNFT, governanceManager);
+        setBlockNumber(block.number + 1);
+        for (uint256 i = 0; i < 10; i++) {
+            UserAccount user = newUserAccount(
+                madToken,
+                stakeNFT,
+                governanceManager
+            );
             emit log_named_address("user", address(user));
             madToken.approve(address(stakeNFT), 11_220_000 * 10**18);
-            uint256 tokenID = stakeNFT.mintTo(address(user), 11_220_000 * 10**18, 1);
+            uint256 tokenID = stakeNFT.mintTo(
+                address(user),
+                11_220_000 * 10**18,
+                1
+            );
             user.voteAsStaker(proposalID, tokenID);
         }
 
@@ -723,7 +849,9 @@ contract GovernanceProposeModifySnapshotTest is DSTest, Setup {
         governanceManager.execute(proposalID);
     }
 
-    function testExecuteModifyStakeAfterStorageFromOutsideWithAllowedProposal() public {
+    function testExecuteModifyStakeAfterStorageFromOutsideWithAllowedProposal()
+        public
+    {
         (
             StakeNFT stakeNFT,
             MinerStake minerStake,
@@ -739,21 +867,24 @@ contract GovernanceProposeModifySnapshotTest is DSTest, Setup {
         uint256 proposalID = governanceManager.propose(address(logic));
         assertProposal(
             governanceManager.getProposal(proposalID),
-            GovernanceStorage.Proposal(
-                false,
-                address(logic),
-                0,
-                172800
-            )
+            GovernanceStorage.Proposal(false, address(logic), 0, 172800)
         );
         assertTrue(!governanceManager.isProposalExecuted(proposalID));
         // We can only vote after 1 block has passed from the proposal creation
-        setBlockNumber(block.number +1);
-        for (uint256 i =0; i < 10; i++){
-            UserAccount user = newUserAccount(madToken, stakeNFT, governanceManager);
+        setBlockNumber(block.number + 1);
+        for (uint256 i = 0; i < 10; i++) {
+            UserAccount user = newUserAccount(
+                madToken,
+                stakeNFT,
+                governanceManager
+            );
             emit log_named_address("user", address(user));
             madToken.approve(address(stakeNFT), 11_220_000 * 10**18);
-            uint256 tokenID = stakeNFT.mintTo(address(user), 11_220_000 * 10**18, 1);
+            uint256 tokenID = stakeNFT.mintTo(
+                address(user),
+                11_220_000 * 10**18,
+                1
+            );
             emit log_named_uint("tokenID", tokenID);
             user.voteAsStaker(proposalID, tokenID);
         }
