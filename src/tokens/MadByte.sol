@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT-open-group
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.6;
 
 import "../../lib/openzeppelin/token/ERC20/ERC20.sol";
 import "./utils/Admin.sol";
@@ -147,7 +147,7 @@ contract MadByte is
         uint256 poolBalance_,
         uint256 totalSupply_,
         uint256 numMB_
-    ) public pure returns (uint256 numEth) {
+    ) public pure returns (uint256) {
         return _MBtoEth(poolBalance_, totalSupply_, numMB_);
     }
 
@@ -288,7 +288,7 @@ contract MadByte is
     /// minMB_ is met, the whole amount of ether sent will be converted in MadBytes.
     /// Return The number of MadBytes minted
     function mint(uint256 minMB_) public payable returns (uint256 nuMB) {
-        nuMB = _mint(msg.sender, msg.value, minMB_);
+        nuMB = _mintTokens(msg.sender, msg.value, minMB_);
         return nuMB;
     }
 
@@ -303,10 +303,9 @@ contract MadByte is
     function mintTo(address to_, uint256 minMB_)
         public
         payable
-        returns (uint256 nuMB)
+        returns (uint256)
     {
-        nuMB = _mint(to_, msg.value, minMB_);
-        return nuMB;
+        return _mintTokens(to_, msg.value, minMB_);
     }
 
     /// Burn MadBytes. This function sends ether corresponding to the amount of
@@ -318,10 +317,9 @@ contract MadByte is
     /// Return The number of ether being received
     function burn(uint256 amount_, uint256 minEth_)
         public
-        returns (uint256 numEth)
+        returns (uint256)
     {
-        numEth = _burn(msg.sender, msg.sender, amount_, minEth_);
-        return numEth;
+        return _burnTokens(msg.sender, msg.sender, amount_, minEth_);
     }
 
     /// Burn MadBytes and send the ether received to other account. This
@@ -338,7 +336,7 @@ contract MadByte is
         uint256 amount_,
         uint256 minEth_
     ) public returns (uint256 numEth) {
-        numEth = _burn(msg.sender, to_, amount_, minEth_);
+        numEth = _burnTokens(msg.sender, to_, amount_, minEth_);
         return numEth;
     }
 
@@ -399,7 +397,7 @@ contract MadByte is
             "MadByte: The number of MadBytes to be burn should be greater than 0!"
         );
         _poolBalance -= _MBtoEth(_poolBalance, totalSupply(), nuMB_);
-        ERC20._burn(msg.sender, nuMB_);
+        _burn(msg.sender, nuMB_);
         return true;
     }
 
@@ -506,7 +504,7 @@ contract MadByte is
 
     // Internal function that mints the MadByte tokens following the bounding
     // price curve.
-    function _mint(
+    function _mintTokens(
         address to_,
         uint256 numEth_,
         uint256 minMB_
@@ -518,13 +516,13 @@ contract MadByte is
         require(nuMB >= minMB_, "MadByte: could not mint minimum MadBytes");
         poolBalance += numEth_;
         _poolBalance = poolBalance;
-        ERC20._mint(to_, nuMB);
+        _mint(to_, nuMB);
         return nuMB;
     }
 
     // Internal function that burns the MadByte tokens following the bounding
     // price curve.
-    function _burn(
+    function _burnTokens(
         address from_,
         address to_,
         uint256 nuMB_,
@@ -539,7 +537,7 @@ contract MadByte is
         require(numEth >= minEth_, "MadByte: Couldn't burn the minEth amount");
         poolBalance -= numEth;
         _poolBalance = poolBalance;
-        ERC20._burn(from_, nuMB_);
+        _burn(from_, nuMB_);
         _safeTransferEth(to_, numEth);
         return numEth;
     }
