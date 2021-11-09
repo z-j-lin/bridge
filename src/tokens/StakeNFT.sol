@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT-open-group
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.6;
 
 import "../../lib/openzeppelin/token/ERC721/ERC721.sol";
 import "../../lib/openzeppelin/token/ERC721/IERC721.sol";
@@ -33,6 +33,12 @@ contract StakeNFT is
     uint256 constant _maxMintLock = 1051200;
     // 10**18
     uint256 constant _accumulatorScaleFactor = 1000000000000000000;
+
+    bool constant _enumEthState = true;
+    bool constant _enumTokenState = false;
+    bool constant _enumWithdrawLock = true;
+    bool constant _enumGovLock = false;
+    bool constant _enumMintLock = false;
 
     // Position describes a staked position
     struct Position {
@@ -130,9 +136,9 @@ contract StakeNFT is
         view
         returns (uint256 payout)
     {
-        require(_exists(tokenID_), "StakeNFT:DNE");
-        Position memory p = _positions[tokenID_];
-        (, , , payout) = _collect(_shares, _ethState, p, p.accumulatorEth);
+        Position memory p = _loadPosition(tokenID_);
+        Accumulator memory ethState = _loadAccumulator(_enumEthState);
+        (, , , payout) = _collect(_shares, ethState, p, p.accumulatorEth);
         return payout;
     }
 
@@ -142,9 +148,9 @@ contract StakeNFT is
         view
         returns (uint256 payout)
     {
-        require(_exists(tokenID_), "StakeNFT:DNE");
-        Position memory p = _positions[tokenID_];
-        (, , , payout) = _collect(_shares, _tokenState, p, p.accumulatorToken);
+        Position memory p = _loadPosition(tokenID_);
+        Accumulator memory tokenState = _loadAccumulator(_enumTokenState);
+        (, , , payout) = _collect(_shares, tokenState, p, p.accumulatorToken);
         return payout;
     }
 
@@ -160,7 +166,7 @@ contract StakeNFT is
     /// this contract. The value returned is the value that would be returned by
     /// a call to skimExcessEth.
     function estimateExcessEth() public view returns (uint256 excess) {
-        return _estimateExcessEth();
+        excess = _estimateExcessEth();
     }
 
     /// skimExcessEth will send to the address passed as to_ any amount of Eth
@@ -205,12 +211,12 @@ contract StakeNFT is
         uint256 tokenID_,
         uint256 lockDuration_
     ) public override withCB onlyGovernance returns (uint256 numberShares) {
-        require(caller_ == ownerOf(tokenID_), "StakeNFT:DNE");
-        require(
+        require(caller_ == ownerOf(tokenID_), "DNE");
+                require(
             lockDuration_ <= _maxGovernanceLock,
-            "StakeNFT:LockDur>ALLOWED"
+            "LockDur>ALLOWED"
         );
-        return _lockPosition(tokenID_, lockDuration_);
+        numberShares = _lockPosition(tokenID_, lockDuration_, _enumGovLock);
     }
 
     /// This function will lock withdraws on the specified Position for up to
@@ -220,12 +226,12 @@ contract StakeNFT is
         withCB
         returns (uint256 numberShares)
     {
-        require(msg.sender == ownerOf(tokenID_), "StakeNFT:DNE");
+        require(msg.sender == ownerOf(tokenID_), "DNE");
         require(
             lockDuration_ <= _maxGovernanceLock,
-            "StakeNFT:LockDur>ALLOWED"
+            "LockDur>ALLOWED"
         );
-        return _lockWithdraw(tokenID_, lockDuration_);
+        numberShares = _lockPosition(tokenID_, lockDuration_, _enumWithdrawLock);
     }
 
     /// DO NOT CALL THIS METHOD UNLESS YOU ARE MAKING A DISTRIBUTION AS ALL VALUE
@@ -243,7 +249,9 @@ contract StakeNFT is
         // collect tokens
         _safeTransferFromERC20(_MadToken, msg.sender, amount_);
         // update state
-        _tokenState = _deposit(_shares, amount_, _tokenState);
+        Accumulator memory tokenState = _loadAccumulator(_enumTokenState);
+        tokenState = _deposit(_shares, amount_, tokenState);
+        _storeAccumulator(_enumTokenState, tokenState);
         _reserveToken += amount_;
     }
 
@@ -255,7 +263,9 @@ contract StakeNFT is
     /// successfully interacting with this method without first reading the
     /// source code and hopefully this comment
     function depositEth(uint8 magic_) public payable withCB checkMagic(magic_) {
-        _ethState = _deposit(_shares, msg.value, _ethState);
+        Accumulator memory ethState = _loadAccumulator(_enumEthState);
+        ethState = _deposit(_shares, msg.value, ethState);
+        _storeAccumulator(_enumEthState, ethState);
         _reserveEth += msg.value;
     }
 
@@ -264,7 +274,7 @@ contract StakeNFT is
     /// MadToken into this contract. This function will fail if the circuit
     /// breaker is tripped.
     function mint(uint256 amount_) public withCB returns (uint256 tokenID) {
-        return _mintNFT(msg.sender, amount_);
+        tokenID = _mintNFT(msg.sender, amount_);
     }
 
     /// mintTo allows a staking position to be opened in the name of an
@@ -273,15 +283,11 @@ contract StakeNFT is
     /// caller to have performed an approve invocation against MadToken into
     /// this contract. This function will fail if the circuit breaker is
     /// tripped.
-    function mintTo(
-        address to_,
-        uint256 amount_,
-        uint256 lockDuration_
-    ) public withCB returns (uint256 tokenID) {
-        require(lockDuration_ <= _maxMintLock, "StakeNFT:LockDur>ALLOWED");
+    function mintTo(address to_, uint256 amount_, uint256 lockDuration_) public withCB returns (uint256 tokenID) {
+        require(lockDuration_ <= _maxMintLock, "LockDur>ALLOWED");
         tokenID = _mintNFT(to_, amount_);
         if (lockDuration_ > 0) {
-            _lockPosition(tokenID, lockDuration_);
+            _lockPosition(tokenID, lockDuration_, _enumMintLock);
         }
         return tokenID;
     }
@@ -292,7 +298,7 @@ contract StakeNFT is
         public
         returns (uint256 payoutEth, uint256 payoutMadToken)
     {
-        return _burn(msg.sender, msg.sender, tokenID_);
+        (payoutEth, payoutMadToken) = _burn(msg.sender, msg.sender, tokenID_);
     }
 
     /// burnTo exits a staking position such that all accumulated value
@@ -301,48 +307,49 @@ contract StakeNFT is
         public
         returns (uint256 payoutEth, uint256 payoutMadToken)
     {
-        return _burn(msg.sender, to_, tokenID_);
+        (payoutEth, payoutMadToken) = _burn(msg.sender, to_, tokenID_);
     }
 
     /// collectEth returns all due Eth allocations to caller. The caller
     /// of this function must be the owner of the tokenID
     function collectEth(uint256 tokenID_) public returns (uint256 payout) {
-        address owner = ownerOf(tokenID_);
-        require(msg.sender == owner, "StakeNFT:!OWNER");
-        Position memory position = _positions[tokenID_];
+        require(msg.sender == ownerOf(tokenID_), "!OWNER");
+        Position memory p = _loadPosition(tokenID_);
         require(
-            _positions[tokenID_].withdrawFreeAfter < block.number,
-            "StakeNFT:LOCKED"
+            p.withdrawFreeAfter < block.number,
+            "LOCKED"
         );
 
         // get values and update state
-        (_positions[tokenID_], payout) = _collectEth(_shares, position);
+        (p, payout) = _collectEth(_shares, p);
+        _storePosition(tokenID_, p);
         _reserveEth -= payout;
         // perform transfer and return amount paid out
-        _safeTransferEth(owner, payout);
+        _safeTransferEth(msg.sender, payout);
         return payout;
     }
 
     /// collectToken returns all due MadToken allocations to caller. The
     /// caller of this function must be the owner of the tokenID
     function collectToken(uint256 tokenID_) public returns (uint256 payout) {
-        address owner = ownerOf(tokenID_);
-        require(msg.sender == owner, "StakeNFT:!OWNER");
-        Position memory position = _positions[tokenID_];
-        require(position.withdrawFreeAfter < block.number, "StakeNFT:LOCKED");
+        require(msg.sender == ownerOf(tokenID_), "!OWNER");
+        Position memory p = _loadPosition(tokenID_);
+        require(p.withdrawFreeAfter < block.number, "LOCKED");
 
         // get values and update state
-        (_positions[tokenID_], payout) = _collectToken(_shares, position);
+        (p, payout) = _collectToken(_shares, p);
         _reserveToken -= payout;
+        _storePosition(tokenID_, p);
+
         // perform transfer and return amount paid out
-        _safeTransferERC20(_MadToken, owner, payout);
+        _safeTransferERC20(_MadToken, msg.sender, payout);
         return payout;
     }
 
     /// gets the position struct given a tokenID. The tokenId must
     /// exist.
     function getPosition(uint256 tokenID_)
-        public
+        external
         view
         returns (
             uint256 shares,
@@ -352,8 +359,7 @@ contract StakeNFT is
             uint256 accumulatorToken
         )
     {
-        require(_exists(tokenID_), "StakeNFT:DNE");
-        Position memory p = _positions[tokenID_];
+        Position memory p = _loadPosition(tokenID_);
         shares = uint256(p.shares);
         freeAfter = uint256(p.freeAfter);
         withdrawFreeAfter = uint256(p.withdrawFreeAfter);
@@ -367,8 +373,9 @@ contract StakeNFT is
         view
         returns (uint256 accumulator, uint256 slush)
     {
-        accumulator = _ethState.accumulator;
-        slush = _ethState.slush;
+        Accumulator memory s = _loadAccumulator(_enumEthState);
+        accumulator = s.accumulator;
+        slush = s.slush;
     }
 
     /// gets the current value for the Token accumulator
@@ -376,42 +383,32 @@ contract StakeNFT is
         external
         view
         returns (uint256 accumulator, uint256 slush)
-    {
-        accumulator = _tokenState.accumulator;
-        slush = _tokenState.slush;
+    {   
+        Accumulator memory s = _loadAccumulator(_enumTokenState);
+        accumulator = s.accumulator;
+        slush = s.slush;
     }
 
     // _lockPosition prevents a position from being burned for duration_ number
     // of blocks by setting the freeAfter field on the Position struct returns
     // the number of shares in the locked Position so that governance vote
     // counting may be performed when setting a lock
-    function _lockPosition(uint256 tokenID_, uint256 duration_)
+    function _lockPosition(uint256 tokenID_, uint256 duration_, bool withdrawal_)
         internal
         returns (uint256 shares)
     {
-        require(_exists(tokenID_), "StakeNFT:DNE");
-        Position memory p = _positions[tokenID_];
-        uint32 freeDur = uint32(block.number) + uint32(duration_);
-        p.freeAfter = freeDur > p.freeAfter ? freeDur : p.freeAfter;
-        _positions[tokenID_] = p;
-        return p.shares;
-    }
-
-    // _lockWithdraw prevents a position from being collected and burned for duration_ number of blocks
-    // by setting the withdrawFreeAfter field on the Position struct.
-    // returns the number of shares in the locked Position so that
-    function _lockWithdraw(uint256 tokenID_, uint256 duration_)
-        internal
-        returns (uint256 shares)
-    {
-        require(_exists(tokenID_), "StakeNFT:DNE");
-        Position memory p = _positions[tokenID_];
+        Position memory p = _loadPosition(tokenID_);
         uint256 freeDur = block.number + duration_;
-        uint256 withdrawFreeAfter = freeDur > uint256(p.withdrawFreeAfter)
+        if (withdrawal_ == _enumWithdrawLock) {
+            uint256 withdrawFreeAfter = freeDur > p.withdrawFreeAfter
             ? freeDur
-            : uint256(p.withdrawFreeAfter);
-        p.withdrawFreeAfter = uint32(withdrawFreeAfter);
-        _positions[tokenID_] = p;
+            : p.withdrawFreeAfter;
+            p.withdrawFreeAfter = uint32(withdrawFreeAfter);
+        } else {
+            uint256 freeAfter = freeDur > p.freeAfter ? freeDur : p.freeAfter;
+            p.freeAfter = uint32(freeAfter);
+        }
+        _storePosition(tokenID_, p);
         return p.shares;
     }
 
@@ -422,15 +419,15 @@ contract StakeNFT is
     {
         // this is to allow struct packing and is safe due to MadToken having a
         // total distribution of 220M
-        require(amount_ <= 2**224 - 1, "StakeNFT: OVERFLOW AMOUNT");
+        require(amount_ <= 2**224 - 1, " OVERFLOW AMOUNT");
         // transfer the number of tokens specified by amount_ into contract
         // from the callers account
         _safeTransferFromERC20(_MadToken, msg.sender, amount_);
 
         // get local copy of storage vars to save gas
         uint256 shares = _shares;
-        Accumulator memory ethState = _ethState;
-        Accumulator memory tokenState = _tokenState;
+        Accumulator memory ethState = _loadAccumulator(_enumEthState);
+        Accumulator memory tokenState = _loadAccumulator(_enumTokenState);
 
         // get new tokenID from counter
         tokenID = _increment();
@@ -438,16 +435,19 @@ contract StakeNFT is
         // update storage
         shares += amount_;
         _shares = shares;
-        _ethState = ethState;
-        _tokenState = tokenState;
-        _positions[tokenID] = Position(
+        uint256 eas = ethState.accumulator;
+        uint256 tas = tokenState.accumulator;
+        Position memory newP = Position(
             uint224(amount_),
             1,
             1,
-            ethState.accumulator,
-            tokenState.accumulator
+            eas,
+            tas
         );
+        _storePosition(tokenID, newP);
         _reserveToken += amount_;
+        _storeAccumulator(_enumEthState, ethState);
+        _storeAccumulator(_enumTokenState, tokenState);
         // invoke inherited method and return
         ERC721._mint(to_, tokenID);
         return tokenID;
@@ -459,30 +459,32 @@ contract StakeNFT is
         address to_,
         uint256 tokenID_
     ) internal returns (uint256 payoutEth, uint256 payoutToken) {
-        require(from_ == ownerOf(tokenID_), "StakeNFT: not owner");
+        require(from_ == ownerOf(tokenID_), " not owner");
 
         // collect state
-        Position memory p = _positions[tokenID_];
+        Position memory p = _loadPosition(tokenID_);
         // enforce freeAfter to prevent burn during lock
         require(
             p.freeAfter < block.number && p.withdrawFreeAfter < block.number,
-            "StakeNFT: not burnable"
+            "locked"
         );
 
         // get copy of storage to save gas
         uint256 shares = _shares;
-
+        
+        Position memory pTmp0;
         // calc Eth amounts due
-        (p, payoutEth) = _collectEth(shares, p);
+        (pTmp0, payoutEth) = _collectEth(shares, p);
 
+        Position memory pTmp1;
         // calc token amounts due
-        (p, payoutToken) = _collectToken(shares, p);
+        (pTmp1, payoutToken) = _collectToken(shares, pTmp0);
 
         // add back to token payout the original stake position
-        payoutToken += p.shares;
+        payoutToken += pTmp1.shares;
 
         // debit global shares counter and delete from mapping
-        _shares -= p.shares;
+        _shares -= pTmp1.shares;
         _reserveToken -= payoutToken;
         _reserveEth -= payoutEth;
         delete _positions[tokenID_];
@@ -501,7 +503,7 @@ contract StakeNFT is
     function _estimateExcessEth() internal view returns (uint256 excess) {
         uint256 reserve = _reserveEth;
         uint256 balance = address(this).balance;
-        require(balance >= reserve, "StakeNFT:balance>reserve");
+        require(balance >= reserve, "balance>reserve");
         excess = balance - reserve;
     }
 
@@ -515,7 +517,7 @@ contract StakeNFT is
         uint256 reserve = _reserveToken;
         MadToken = _MadToken;
         uint256 balance = MadToken.balanceOf(address(this));
-        require(balance >= reserve, "StakeNFT:balance>reserve");
+        require(balance >= reserve, "balance>reserve");
         excess = balance - reserve;
         return (MadToken, excess);
     }
@@ -525,13 +527,16 @@ contract StakeNFT is
         returns (Position memory p, uint256 payout)
     {
         uint256 acc;
-        (_tokenState, p, acc, payout) = _collect(
+        Accumulator memory tokenState = _loadAccumulator(_enumTokenState);
+        Accumulator memory tokenStateTmp;
+        (tokenStateTmp, p, acc, payout) = _collect(
             shares_,
-            _tokenState,
+            tokenState,
             p_,
             p_.accumulatorToken
         );
         p.accumulatorToken = acc;
+        _storeAccumulator(_enumTokenState, tokenStateTmp);
         return (p, payout);
     }
 
@@ -542,13 +547,16 @@ contract StakeNFT is
         returns (Position memory p, uint256 payout)
     {
         uint256 acc;
-        (_ethState, p, acc, payout) = _collect(
+        Accumulator memory ethState = _loadAccumulator(_enumEthState);
+        Accumulator memory ethStateTmp;
+        (ethStateTmp, p, acc, payout) = _collect(
             shares_,
-            _ethState,
+            ethState,
             p_,
             p_.accumulatorEth
         );
         p.accumulatorEth = acc;
+        _storeAccumulator(_enumEthState, ethStateTmp);
         return (p, payout);
     }
 
@@ -560,8 +568,7 @@ contract StakeNFT is
         returns (
             Accumulator memory,
             Position memory,
-            uint256,
-            uint256
+            uint256, uint256
         )
     {
         // determine number of accumulator steps this Position needs distributions from
@@ -597,11 +604,7 @@ contract StakeNFT is
 
     // _deposit allows an Accumulator to be updated with new value if there are
     // no currently staked positions, all value is stored in the slush
-    function _deposit(
-        uint256 shares_,
-        uint256 delta_,
-        Accumulator memory state_
-    ) internal pure returns (Accumulator memory) {
+    function _deposit(uint256 shares_, uint256 delta_, Accumulator memory state_) internal pure returns (Accumulator memory) {
         
         state_.slush += (delta_ * _accumulatorScaleFactor);
         //state_.slush = (state_.slush + delta_) * _accumulatorScaleFactor;
@@ -614,17 +617,13 @@ contract StakeNFT is
         }
         // Slush should be never be above 2**167 to protect against overflow in
         // the later code.
-        require(state_.slush < 2**167, "StakeNFT:slushOVERFLOW");
+        require(state_.slush < 2**167, "slushOVERFLOW");
         return state_;
     }
 
     // _slushSkim flushes value from the slush into the accumulator if there are
     // no currently staked positions, all value is stored in the slush
-    function _slushSkim(
-        uint256 shares_,
-        uint256 accumulator_,
-        uint256 slush_
-    ) internal pure returns (uint256, uint256) {
+    function _slushSkim(uint256 shares_, uint256 accumulator_, uint256 slush_) internal pure returns (uint256, uint256) {
         if (shares_ > 0) {
             uint256 deltaAccumulator = slush_ / shares_;
             slush_ -= deltaAccumulator * shares_;
@@ -638,5 +637,31 @@ contract StakeNFT is
             }
         }
         return (accumulator_, slush_);
+    }
+    
+    function _loadPosition(uint256 tokenID_)internal view returns(Position memory p) {
+        require(_exists(tokenID_), "DNE");
+        p = _positions[tokenID_];
+        return p;
+    }
+
+    function _storePosition(uint256 tokenID_, Position memory p_) internal {
+        _positions[tokenID_] = p_;
+    }
+
+    function _loadAccumulator(bool ethA) internal view returns(Accumulator memory a) {
+        if (ethA == _enumEthState) {
+            a = _ethState;
+            return a;
+        }
+        a = _tokenState;
+        return a;
+    }
+
+    function _storeAccumulator(bool ethA, Accumulator memory a_) internal {
+        if (ethA == _enumEthState) {
+            _ethState = a_;
+        }
+        _tokenState = a_;
     }
 }
