@@ -109,51 +109,56 @@ contract StakeNFT is
         _setGovernance(governance_);
     }
 
-    /// gets the _accumulatorScaleFactor used to scale the ether and tokens
-    /// deposited on this contract to reduce the integer division errors.
-    function accumulatorScaleFactor() public pure returns (uint256) {
-        return _accumulatorScaleFactor;
-    }
-
-    /// gets the total amount of MadToken staked in contract
-    function getTotalShares() public view returns (uint256) {
-        return _shares;
-    }
-
-    /// gets the total amount of Ether staked in contract
-    function getTotalReserveEth() public view returns (uint256) {
-        return _reserveEth;
-    }
-
-    /// gets the total amount of MadToken staked in contract
-    function getTotalReserveMadToken() public view returns (uint256) {
-        return _reserveToken;
-    }
-
-    /// estimateEthCollection returns the amount of eth a tokenID may withdraw
-    function estimateEthCollection(uint256 tokenID_)
+    /// DO NOT CALL THIS METHOD UNLESS YOU ARE MAKING A DISTRIBUTION AS ALL VALUE
+    /// WILL BE DISTRIBUTED TO STAKERS EVENLY. depositToken distributes MadToken
+    /// to all stakers evenly should only be called during a slashing event. Any
+    /// MadToken sent to this method in error will be lost. This function will
+    /// fail if the circuit breaker is tripped. The magic_ parameter is intended
+    /// to stop some one from successfully interacting with this method without
+    /// first reading the source code and hopefully this comment
+    function depositToken(uint8 magic_, uint256 amount_)
         public
-        view
-        returns (uint256 payout)
+        withCB
+        checkMagic(magic_)
     {
-        require(_exists(tokenID_), "DNE");
-        Position memory p = _loadPosition(tokenID_);
-        Accumulator memory ethState = _loadAccumulator(_enumEthState);
-        (, payout) = _collect(_shares, ethState, p, p.accumulatorEth);
-        return payout;
+        // collect tokens
+        _safeTransferFromERC20(_MadToken, msg.sender, amount_);
+        // update state
+        Accumulator memory state = _loadAccumulator(_enumTokenState);
+        _deposit(_shares, amount_, state);
+        _storeAccumulator(_enumTokenState, state);
+        _reserveToken += amount_;
     }
 
-    /// estimateTokenCollection returns the amount of MadToken a tokenID may withdraw
-    function estimateTokenCollection(uint256 tokenID_)
-        public
-        view
-        returns (uint256 payout)
-    {
-        require(_exists(tokenID_), "DNE");
-        Position memory p = _loadPosition(tokenID_);
-        Accumulator memory tokenState = _loadAccumulator(_enumTokenState);
-        (, payout) = _collect(_shares, tokenState, p, p.accumulatorToken);
-        return payout;
+    /// DO NOT CALL THIS METHOD UNLESS YOU ARE MAKING A DISTRIBUTION ALL VALUE
+    /// WILL BE DISTRIBUTED TO STAKERS EVENLY depositEth distributes Eth to all
+    /// stakers evenly should only be called by MadBytes contract any Eth sent to
+    /// this method in error will be lost this function will fail if the circuit
+    /// breaker is tripped the magic_ parameter is intended to stop some one from
+    /// successfully interacting with this method without first reading the
+    /// source code and hopefully this comment
+    function depositEth(uint8 magic_) public payable withCB checkMagic(magic_) {
+        Accumulator memory state = _loadAccumulator(_enumEthState);
+        _deposit(_shares, msg.value, state);
+        _storeAccumulator(_enumEthState, state);
+        _reserveEth += msg.value;
+    }
+
+    /// lockPosition is called by governance system when a governance
+    /// vote is cast. This function will lock the specified Position for up to
+    /// _maxGovernanceLock. This method may only be called by the governance
+    /// contract. This function will fail if the circuit breaker is tripped
+    function lockPosition(
+        address caller_,
+        uint256 tokenID_,
+        uint256 lockDuration_
+    ) public override withCB onlyGovernance returns (uint256 numberShares) {
+        require(caller_ == ownerOf(tokenID_), "DNE");
+                require(
+            lockDuration_ <= _maxGovernanceLock,
+            "LockDur>ALLOWED"
+        );
+        numberShares = _lockPosition(tokenID_, lockDuration_, _enumGovLock);
     }
 
     /// estimateExcessToken returns the amount of MadToken that is held in the
@@ -204,71 +209,95 @@ contract StakeNFT is
         return excess;
     }
 
-    /// lockPosition is called by governance system when a governance
-    /// vote is cast. This function will lock the specified Position for up to
-    /// _maxGovernanceLock. This method may only be called by the governance
-    /// contract. This function will fail if the circuit breaker is tripped
-    function lockPosition(
-        address caller_,
-        uint256 tokenID_,
-        uint256 lockDuration_
-    ) public override withCB onlyGovernance returns (uint256 numberShares) {
-        require(caller_ == ownerOf(tokenID_), "DNE");
-                require(
-            lockDuration_ <= _maxGovernanceLock,
-            "LockDur>ALLOWED"
-        );
-        numberShares = _lockPosition(tokenID_, lockDuration_, _enumGovLock);
+    /// gets the _accumulatorScaleFactor used to scale the ether and tokens
+    /// deposited on this contract to reduce the integer division errors.
+    function accumulatorScaleFactor() external pure returns (uint256) {
+        return _accumulatorScaleFactor;
     }
 
-    /// This function will lock withdraws on the specified Position for up to
-    /// _maxGovernanceLock. This function will fail if the circuit breaker is tripped
-    function lockWithdraw(uint256 tokenID_, uint256 lockDuration_)
-        public
-        withCB
-        returns (uint256 numberShares)
+    /// gets the total amount of MadToken staked in contract
+    function getTotalShares() external view returns (uint256) {
+        return _shares;
+    }
+
+    /// gets the total amount of Ether staked in contract
+    function getTotalReserveEth() external view returns (uint256) {
+        return _reserveEth;
+    }
+
+    /// gets the total amount of MadToken staked in contract
+    function getTotalReserveMadToken() external view returns (uint256) {
+        return _reserveToken;
+    }
+
+    /// gets the current value for the Eth accumulator
+    function getEthAccumulator()
+        external
+        view
+        returns (uint256 accumulator, uint256 slush)
     {
-        require(msg.sender == ownerOf(tokenID_), "DNE");
-        require(
-            lockDuration_ <= _maxGovernanceLock,
-            "LockDur>ALLOWED"
-        );
-        numberShares = _lockPosition(tokenID_, lockDuration_, _enumWithdrawLock);
+        Accumulator memory s = _loadAccumulator(_enumEthState);
+        accumulator = s.accumulator;
+        slush = s.slush;
     }
 
-    /// DO NOT CALL THIS METHOD UNLESS YOU ARE MAKING A DISTRIBUTION AS ALL VALUE
-    /// WILL BE DISTRIBUTED TO STAKERS EVENLY. depositToken distributes MadToken
-    /// to all stakers evenly should only be called during a slashing event. Any
-    /// MadToken sent to this method in error will be lost. This function will
-    /// fail if the circuit breaker is tripped. The magic_ parameter is intended
-    /// to stop some one from successfully interacting with this method without
-    /// first reading the source code and hopefully this comment
-    function depositToken(uint8 magic_, uint256 amount_)
-        public
-        withCB
-        checkMagic(magic_)
+    /// gets the current value for the Token accumulator
+    function getTokenAccumulator()
+        external
+        view
+        returns (uint256 accumulator, uint256 slush)
+    {   
+        Accumulator memory s = _loadAccumulator(_enumTokenState);
+        accumulator = s.accumulator;
+        slush = s.slush;
+    }
+
+    /// gets the position struct given a tokenID. The tokenId must
+    /// exist.
+    function getPosition(uint256 tokenID_)
+        external
+        view
+        returns (
+            uint256 shares,
+            uint256 freeAfter,
+            uint256 withdrawFreeAfter,
+            uint256 accumulatorEth,
+            uint256 accumulatorToken
+        )
     {
-        // collect tokens
-        _safeTransferFromERC20(_MadToken, msg.sender, amount_);
-        // update state
-        Accumulator memory state = _loadAccumulator(_enumTokenState);
-        _deposit(_shares, amount_, state);
-        _storeAccumulator(_enumTokenState, state);
-        _reserveToken += amount_;
+        require(_exists(tokenID_), "DNE");
+        Position memory p = _loadPosition(tokenID_);
+        shares = uint256(p.shares);
+        freeAfter = uint256(p.freeAfter);
+        withdrawFreeAfter = uint256(p.withdrawFreeAfter);
+        accumulatorEth = p.accumulatorEth;
+        accumulatorToken = p.accumulatorToken;
     }
 
-    /// DO NOT CALL THIS METHOD UNLESS YOU ARE MAKING A DISTRIBUTION ALL VALUE
-    /// WILL BE DISTRIBUTED TO STAKERS EVENLY depositEth distributes Eth to all
-    /// stakers evenly should only be called by MadBytes contract any Eth sent to
-    /// this method in error will be lost this function will fail if the circuit
-    /// breaker is tripped the magic_ parameter is intended to stop some one from
-    /// successfully interacting with this method without first reading the
-    /// source code and hopefully this comment
-    function depositEth(uint8 magic_) public payable withCB checkMagic(magic_) {
-        Accumulator memory state = _loadAccumulator(_enumEthState);
-        _deposit(_shares, msg.value, state);
-        _storeAccumulator(_enumEthState, state);
-        _reserveEth += msg.value;
+     /// estimateEthCollection returns the amount of eth a tokenID may withdraw
+    function estimateEthCollection(uint256 tokenID_)
+        external
+        view
+        returns (uint256 payout)
+    {
+        require(_exists(tokenID_), "DNE");
+        Position memory p = _loadPosition(tokenID_);
+        Accumulator memory ethState = _loadAccumulator(_enumEthState);
+        (, payout) = _collect(_shares, ethState, p, p.accumulatorEth);
+        return payout;
+    }
+
+    /// estimateTokenCollection returns the amount of MadToken a tokenID may withdraw
+    function estimateTokenCollection(uint256 tokenID_)
+        external
+        view
+        returns (uint256 payout)
+    {
+        require(_exists(tokenID_), "DNE");
+        Position memory p = _loadPosition(tokenID_);
+        Accumulator memory tokenState = _loadAccumulator(_enumTokenState);
+        (, payout) = _collect(_shares, tokenState, p, p.accumulatorToken);
+        return payout;
     }
 
     /// mint allows a staking position to be opened. This function
@@ -312,6 +341,21 @@ contract StakeNFT is
         (payoutEth, payoutMadToken) = _burnNFT(msg.sender, to_, tokenID_);
     }
 
+    /// This function will lock withdraws on the specified Position for up to
+    /// _maxGovernanceLock. This function will fail if the circuit breaker is tripped
+    function lockWithdraw(uint256 tokenID_, uint256 lockDuration_)
+        public
+        withCB
+        returns (uint256 numberShares)
+    {
+        require(msg.sender == ownerOf(tokenID_), "DNE");
+        require(
+            lockDuration_ <= _maxGovernanceLock,
+            "LockDur>ALLOWED"
+        );
+        numberShares = _lockPosition(tokenID_, lockDuration_, _enumWithdrawLock);
+    }
+
     /// collectEth returns all due Eth allocations to caller. The caller
     /// of this function must be the owner of the tokenID
     function collectEth(uint256 tokenID_) public returns (uint256 payout) {
@@ -347,50 +391,6 @@ contract StakeNFT is
         // perform transfer and return amount paid out
         _safeTransferERC20(_MadToken, msg.sender, payout);
         return payout;
-    }
-
-    /// gets the position struct given a tokenID. The tokenId must
-    /// exist.
-    function getPosition(uint256 tokenID_)
-        external
-        view
-        returns (
-            uint256 shares,
-            uint256 freeAfter,
-            uint256 withdrawFreeAfter,
-            uint256 accumulatorEth,
-            uint256 accumulatorToken
-        )
-    {
-        require(_exists(tokenID_), "DNE");
-        Position memory p = _loadPosition(tokenID_);
-        shares = uint256(p.shares);
-        freeAfter = uint256(p.freeAfter);
-        withdrawFreeAfter = uint256(p.withdrawFreeAfter);
-        accumulatorEth = p.accumulatorEth;
-        accumulatorToken = p.accumulatorToken;
-    }
-
-    /// gets the current value for the Eth accumulator
-    function getEthAccumulator()
-        external
-        view
-        returns (uint256 accumulator, uint256 slush)
-    {
-        Accumulator memory s = _loadAccumulator(_enumEthState);
-        accumulator = s.accumulator;
-        slush = s.slush;
-    }
-
-    /// gets the current value for the Token accumulator
-    function getTokenAccumulator()
-        external
-        view
-        returns (uint256 accumulator, uint256 slush)
-    {   
-        Accumulator memory s = _loadAccumulator(_enumTokenState);
-        accumulator = s.accumulator;
-        slush = s.slush;
     }
 
     // _lockPosition prevents a position from being burned for duration_ number
