@@ -41,7 +41,7 @@ contract StakeNFT is
     uint8 constant _enumMintLock = 4;
 
     // Position describes a staked position
-    struct PositionPacked {
+    struct Position {
         // number of madToken
         uint224 shares;
         // block number after which the position may be burned.
@@ -49,23 +49,6 @@ contract StakeNFT is
         uint32 freeAfter;
         // block number after which the position may be collected or burned.
         uint32 withdrawFreeAfter;
-        // the last value of the ethState accumulator this account performed a
-        // withdraw at
-        uint256 accumulatorEth;
-        // the last value of the tokenState accumulator this account performed a
-        // withdraw at
-        uint256 accumulatorToken;
-    }
-
-    // Position describes a staked position
-    struct Position {
-        // number of madToken
-        uint256 shares;
-        // block number after which the position may be burned.
-        // prevents double spend of voting weight
-        uint256 freeAfter;
-        // block number after which the position may be collected or burned.
-        uint256 withdrawFreeAfter;
         // the last value of the ethState accumulator this account performed a
         // withdraw at
         uint256 accumulatorEth;
@@ -98,7 +81,7 @@ contract StakeNFT is
     IERC20TransferMinimal _MadToken;
 
     // _positions tracks all staked positions based on tokenID
-    mapping(uint256 => PositionPacked) _positions;
+    mapping(uint256 => Position) _positions;
 
     // state to keep track of the amount of Eth deposited and collected from the
     // contract
@@ -424,10 +407,14 @@ contract StakeNFT is
             uint256 withdrawFreeAfter = freeDur > p.withdrawFreeAfter
             ? freeDur
             : p.withdrawFreeAfter;
-            p.withdrawFreeAfter = withdrawFreeAfter;
+            unchecked {
+                p.withdrawFreeAfter = uint32(withdrawFreeAfter);
+            }
         } else if (lockType_ == _enumGovLock || lockType_ == _enumMintLock ) {
             uint256 freeAfter = freeDur > p.freeAfter ? freeDur : p.freeAfter;
-            p.freeAfter = freeAfter;
+            unchecked {
+                p.freeAfter = uint32(freeAfter);
+            }
         } else {
             assert(false);
         }
@@ -459,7 +446,7 @@ contract StakeNFT is
         shares += amount_;
         _shares = shares;
         _storePosition(tokenID, Position(
-            amount_,
+            uint224(amount_),
             1,
             1,
             ethState.accumulator,
@@ -637,15 +624,14 @@ contract StakeNFT is
     }
     
     function _loadPosition(uint256 tokenID_)internal view returns(Position memory) {
-            PositionPacked memory p_ = _positions[tokenID_];
-            return p;
+            return _positions[tokenID_];
     }
 
     function _storePosition(uint256 tokenID_, Position memory p_) internal {
-            _positions[tokenID_] = p;
+            _positions[tokenID_] = p_;
     }
 
-    function _loadAccumulator(uint8 ethA) internal view returns(Accumulator memory {
+    function _loadAccumulator(uint8 ethA) internal view returns(Accumulator memory a) {
         if (ethA == _enumEthState) {
             return _ethState;
         }
