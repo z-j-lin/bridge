@@ -13,3 +13,6 @@
 [submodule "lib/lib/ds-test"]
 	path = lib/lib/ds-test
 	url = https://github.com/dapphub/ds-test
+[submodule "lib/lib/ds-token"]
+	path = lib/lib/ds-token
+	url = https://github.com/dapphub/ds-token
