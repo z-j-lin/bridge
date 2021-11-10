@@ -32,19 +32,18 @@ abstract contract BaseMock {
 
     function mintTo(
         address to_,
-        uint256 amount_,
-        uint256 duration_
+        uint256 amount_
     ) public returns (uint256) {
-        return _StakeNFTLP.mintTo(to_, amount_, duration_);
+        return _StakeNFTLP.mintTo(to_, amount_);
     }
 
-    function burn(uint256 tokenID) public returns (uint256) {
+    function burn(uint256 tokenID) public returns (uint256, uint256) {
         return _StakeNFTLP.burn(tokenID);
     }
 
     function burnTo(address to_, uint256 tokenID)
         public
-        returns (uint256)
+        returns (uint256, uint256)
     {
         return _StakeNFTLP.burnTo(to_, tokenID);
     }
@@ -96,6 +95,10 @@ contract AdminAccount is BaseMock {
 
     function skimExcessEth(address to_) public returns (uint256 excess) {
         return _StakeNFTLP.skimExcessEth(to_);
+    }
+
+    function skimExcessToken(address to_) public returns (uint256 excess) {
+        return _StakeNFTLP.skimExcessToken(to_);
     }
 
 }
@@ -451,7 +454,7 @@ contract StakeNFTLPTest is DSTest {
     function testFail_tripCBMintTo() public {
         (StakeNFTLP StakeNFTLP_, , AdminAccount admin) = getFixtureData();
         admin.tripCB(); // open CB
-        StakeNFTLP_.mintTo(address(0x0), 100, 0);
+        StakeNFTLP_.mintTo(address(0x0), 100);
     }
 
     function testFail_getPositionThatDoesNotExist() public {
@@ -504,16 +507,16 @@ contract StakeNFTLPTest is DSTest {
     function testFail_MintToMoreMadTokensThanPossible() public {
         (StakeNFTLP StakeNFTLP_, MadTokenMock madToken,) = getFixtureData();
         UserAccount user = newUserAccount(madToken, StakeNFTLP_);
-        StakeNFTLP_.mintTo(address(user), 2**32, 1);
+        StakeNFTLP_.mintTo(address(user), 2**32);
     }
 
     function testFail_MintToWithoutApproval() public {
         (StakeNFTLP StakeNFTLP_, MadTokenMock madToken,) = getFixtureData();
         UserAccount user = newUserAccount(madToken, StakeNFTLP_);
-        StakeNFTLP_.mintTo(address(user), 100, 1);
+        StakeNFTLP_.mintTo(address(user), 100);
     }
     // mint+burn
-    function testFail_BurningRightAfterMinting() public {
+    function test_BurningRightAfterMinting() public {
         (StakeNFTLP StakeNFTLP_, MadTokenMock madToken,) = getFixtureData();
         UserAccount user = newUserAccount(madToken, StakeNFTLP_);
 
@@ -529,7 +532,9 @@ contract StakeNFTLPTest is DSTest {
         assertEq(madToken.balanceOf(address(user)), 0);
         assertEq(madToken.balanceOf(address(StakeNFTLP_)), 1000);
 
-        user.burn(tokenID);
+        (uint256 ethPayout, uint256 tokenPayout) = user.burn(tokenID);
+        assertEq(ethPayout, 0);
+        assertEq(tokenPayout, 1000);
     }
 
     function testMintAndBurn() public {
@@ -552,11 +557,12 @@ contract StakeNFTLPTest is DSTest {
 
         setBlockNumber(block.number + 2);
 
-        uint256 payoutEth = user.burn(tokenID);
+        (uint256 payoutEth, uint256 payoutToken) = user.burn(tokenID);
         assertEq(payoutEth, 0);
+        assertEq(payoutToken, 1000);
         assertReserveAndExcessZero(StakeNFTLP_, 0 ether);
-        assertEq(madToken.balanceOf(address(user)), 0);
-        assertEq(madToken.balanceOf(address(StakeNFTLP_)), 1000);
+        assertEq(madToken.balanceOf(address(user)), 1000);
+        assertEq(madToken.balanceOf(address(StakeNFTLP_)), 0);
     }
 
     // mint+burnTo
@@ -575,7 +581,7 @@ contract StakeNFTLPTest is DSTest {
             getCurrentPosition(StakeNFTLP_,  tokenID),
             StakeNFTLP.Position(1000, 0)
         );
-
+        assertEq(StakeNFTLP_.balanceOf(address(user)), 1);
         assertEq(madToken.balanceOf(address(user)), 0);
         assertEq(madToken.balanceOf(address(user2)), 0);
         assertEq(madToken.balanceOf(address(StakeNFTLP_)), 1000);
@@ -583,15 +589,12 @@ contract StakeNFTLPTest is DSTest {
 
         setBlockNumber(block.number + 2);
 
-        uint256 payoutEth = user.burnTo(
-            address(user2),
-            tokenID
-        );
+        (uint256 payoutEth, uint256 payoutToken) = user.burnTo(address(user2),tokenID);
         assertEq(payoutEth, 0);
-
+        assertEq(payoutToken, 1000);
         assertEq(madToken.balanceOf(address(user)), 0);
-        assertEq(madToken.balanceOf(address(user2)), 0);
-        assertEq(madToken.balanceOf(address(StakeNFTLP_)), 1000);
+        assertEq(madToken.balanceOf(address(user2)), 1000);
+        assertEq(madToken.balanceOf(address(StakeNFTLP_)), 0);
         assertReserveAndExcessZero(StakeNFTLP_, 0 ether);
     }
 
@@ -604,7 +607,7 @@ contract StakeNFTLPTest is DSTest {
         madToken.transfer(address(user), 1000);
         user.approve(address(StakeNFTLP_), 1000);
 
-        uint256 tokenID = user.mintTo(address(user2), 1000, 1);
+        uint256 tokenID = user.mintTo(address(user2), 1000);
         assertPosition(
             getCurrentPosition(StakeNFTLP_,  tokenID),
             StakeNFTLP.Position(1000, 0)
@@ -617,8 +620,9 @@ contract StakeNFTLPTest is DSTest {
 
         setBlockNumber(block.number + 2);
 
-        uint256 payoutEth = user2.burn(tokenID);
+        (uint256 payoutEth, uint256 payoutToken) = user2.burn(tokenID);
         assertEq(payoutEth, 0);
+        assertEq(payoutToken, 1000);
 
         assertEq(madToken.balanceOf(address(user)), 0);
         assertEq(madToken.balanceOf(address(user2)), 1000);
@@ -636,7 +640,7 @@ contract StakeNFTLPTest is DSTest {
         madToken.transfer(address(user), 1000);
         user.approve(address(StakeNFTLP_), 1000);
 
-        uint256 tokenID = user.mintTo(address(user2), 1000, 1);
+        uint256 tokenID = user.mintTo(address(user2), 1000);
         assertPosition(
             getCurrentPosition(StakeNFTLP_,  tokenID),
             StakeNFTLP.Position(1000, 0)
@@ -650,12 +654,9 @@ contract StakeNFTLPTest is DSTest {
 
         setBlockNumber(block.number + 2);
 
-        uint256 payoutEth = user2.burnTo(
-            address(user3),
-            tokenID
-        );
+        (uint256 payoutEth, uint256 payoutToken) = user2.burnTo(address(user3), tokenID);
         assertEq(payoutEth, 0);
-
+        assertEq(payoutToken, 1000);
         assertEq(madToken.balanceOf(address(user)), 0);
         assertEq(madToken.balanceOf(address(user2)), 0);
         assertEq(madToken.balanceOf(address(user3)), 1000);
@@ -742,12 +743,12 @@ contract StakeNFTLPTest is DSTest {
             emit log_named_uint("Balance ETH: ", address(StakeNFTLP_).balance);
             (, uint256 slush) = StakeNFTLP_.getEthAccumulator();
             assertEq(slush, (credits - debits) * 10**18);
-           assertReserveAndExcessZero(StakeNFTLP_, debits);
+           assertReserveAndExcessZero(StakeNFTLP_, credits - debits);
         }
         {
             donator.depositEth(2000);
             credits += 2000;
-           assertReserveAndExcessZero(StakeNFTLP_, debits);
+           assertReserveAndExcessZero(StakeNFTLP_, credits-debits);
             uint256 payout = user1.collectEth(tokenID1);
             assertEq(payout, 667);
             debits += payout;
@@ -766,7 +767,7 @@ contract StakeNFTLPTest is DSTest {
             assertEq(slush, 1 ether);
         }
         {
-           assertReserveAndExcessZero(StakeNFTLP_, debits);
+           assertReserveAndExcessZero(StakeNFTLP_, credits - debits);
         }
     }
 
@@ -940,37 +941,43 @@ contract StakeNFTLPTest is DSTest {
         assertEq(StakeNFTLP_.balanceOf(address(user2)), 2);
         assertEq(address(user1).balance, 0 ether);
         assertEq(address(user2).balance, 0 ether);
-        assertEq(madToken.balanceOf(address(StakeNFTLP_)), 4000 * ONE_MADTOKEN);
+        assertEq(madToken.balanceOf(address(StakeNFTLP_)), 2000 * ONE_MADTOKEN);
         assertEq(address(StakeNFTLP_).balance, 2000 ether);
 
         setBlockNumber(block.number + 2);
 
         //e.g bug was found so we needed to trip the Circuit breaker
         admin.tripCB();
-
+        {
         // Only burn (which uses both collect) should work now
-        uint256 payoutEth = user1.burn(tokenID1);
+        (uint256 payoutEth, uint256 payoutToken) = user1.burn(tokenID1);
+        assertEq(payoutToken, 1000 * ONE_MADTOKEN);
         assertEq(payoutEth, 1100 ether);
         assertEq(StakeNFTLP_.balanceOf(address(user1)), 0);
         assertEq(address(user1).balance, 1100 ether);
-        assertEq(madToken.balanceOf(address(user1)), 2100 * ONE_MADTOKEN);
+        assertEq(madToken.balanceOf(address(user1)), 1000 * ONE_MADTOKEN);
        assertReserveAndExcessZero(StakeNFTLP_, 900 ether);
-
-        payoutEth = user2.burn(tokenID2);
+        }
+        {
+        (uint256 payoutEth, uint256 payoutToken) = user2.burn(tokenID2);
+        assertEq(payoutToken, 800 * ONE_MADTOKEN);
         assertEq(payoutEth, 880 ether);
         assertEq(StakeNFTLP_.balanceOf(address(user2)), 1);
         assertEq(address(user2).balance, 880 ether);
-        assertEq(madToken.balanceOf(address(user2)), 1680 * ONE_MADTOKEN);
+        assertEq(madToken.balanceOf(address(user2)), 800 * ONE_MADTOKEN);
        assertReserveAndExcessZero(StakeNFTLP_, 20 ether);
-
-        payoutEth = user2.burn(tokenID3);
+        }
+        {
+        (uint256 payoutEth, uint256 payoutToken) = user2.burn(tokenID3);
+        assertEq(payoutToken, 200 * ONE_MADTOKEN);
         assertEq(payoutEth, 20 ether);
         assertEq(StakeNFTLP_.balanceOf(address(user2)), 0);
         assertEq(address(user2).balance, 900 ether);
-        assertEq(madToken.balanceOf(address(user2)), 1900 * ONE_MADTOKEN);
+        assertEq(madToken.balanceOf(address(user2)), 1000 * ONE_MADTOKEN);
 
         assertEq(madToken.balanceOf(address(StakeNFTLP_)), 0);
        assertReserveAndExcessZero(StakeNFTLP_, 0 ether);
+        }
     }
 
     function test_MintCollectBurnALot() public {
@@ -1016,11 +1023,11 @@ contract StakeNFTLPTest is DSTest {
         // burning some amount of Positions
         for (uint256 i = 0; i < iterations; i++) {
             if (i % 7 == 0) {
-                uint256 payoutEth = users[i].burn(
+                        (uint256 payoutEth, ) = users[i].burn(
                     tokenIDs[j]
                 );
                 reserveEth -= payoutEth;
-                payoutEth = users[i].burn(tokenIDs[j + 1]);
+                (payoutEth, ) = users[i].burn(tokenIDs[j + 1]);
                 reserveEth -= payoutEth;
             }
             j += 2;
@@ -1060,12 +1067,12 @@ contract StakeNFTLPTest is DSTest {
         j = 0;
         // burning all token expect 1
         for (uint256 i = 0; i < iterations - 1; i++) {
-            uint256 payoutEth = users[i].burn(
+            (uint256 payoutEth, ) = users[i].burn(
                 tokenIDs[j]
             );
             reserveEth -= payoutEth;
            assertReserveAndExcessZero(StakeNFTLP_, reserveEth);
-            payoutEth= users[i].burn(tokenIDs[j + 1]);
+            (payoutEth, ) = users[i].burn(tokenIDs[j + 1]);
             reserveEth -= payoutEth;
            assertReserveAndExcessZero(StakeNFTLP_, reserveEth);
             j += 2;
@@ -1281,12 +1288,12 @@ contract StakeNFTLPTest is DSTest {
         // advance block number
         require(setBlockNumber(block.number + 2));
         {
-            uint256 payoutEth1 = user1.burn(tokenID1);
+            (uint256 payoutEth1, ) = user1.burn(tokenID1);
             assertEq(payoutEth1, 100);
         }
         assertReserveAndExcessZero(StakeNFTLPHugeAcc, 75);
         {
-            uint256 payoutEth2 = user2.burn(tokenID2);
+            (uint256 payoutEth2, ) = user2.burn(tokenID2);
             assertEq(payoutEth2, 75);
         }
         assertReserveAndExcessZero(StakeNFTLPHugeAcc, 0);
@@ -1686,7 +1693,7 @@ contract StakeNFTLPTest is DSTest {
     
     function testSkimExcessEth() public {
         // transferring money before the contract is created
-        payable(address(0xf5a2fE45F4f1308502b1C136b9EF8af136141382)).transfer(
+        payable(address(0xEFc56627233b02eA95bAE7e19F648d7DcD5Bb132)).transfer(
             100 ether + 1
         );
         (
@@ -1712,189 +1719,24 @@ contract StakeNFTLPTest is DSTest {
         ) = getFixtureData();
         // transferring Token excess
         madToken.transfer(
-            address(0xf5a2fE45F4f1308502b1C136b9EF8af136141382),
+            address(StakeNFTLP_),
             1000 * ONE_MADTOKEN + 1
         );
         assertEq(
             madToken.balanceOf(address(StakeNFTLP_)),
             1000 * ONE_MADTOKEN + 1
         );
-        assertReserveAndExcess(StakeNFTLP_, 1000 * ONE_MADTOKEN + 1, 0);
+
         UserAccount user = newUserAccount(madToken, StakeNFTLP_);
         assertEq(madToken.balanceOf(address(user)), 0);
+        admin.skimExcessToken(address(user));
         assertEq(madToken.balanceOf(address(user)), 1000 * ONE_MADTOKEN + 1);
         assertEq(madToken.balanceOf(address(StakeNFTLP_)), 0);
     }
 
-    function testSkimExcessWithMintBurnCollectAndDeposit() public {
+    function testFail_ReentrantSkimExcessEth() public {
         // transferring money before the contract is created
-        payable(address(0xf5a2fE45F4f1308502b1C136b9EF8af136141382)).transfer(
-            100 ether + 1
-        );
-        (
-            StakeNFTLP StakeNFTLP_,
-            MadTokenMock madToken,
-            AdminAccount admin
-        ) = getFixtureData();
-        // transferring Token excess
-        madToken.transfer(
-            address(0xf5a2fE45F4f1308502b1C136b9EF8af136141382),
-            1000 * ONE_MADTOKEN + 1
-        );
-        assertEq(address(StakeNFTLP_).balance, 100 ether + 1);
-        assertReserveAndExcess(
-            StakeNFTLP_,
-            30 * ONE_MADTOKEN,
-            100 ether + 1
-        );
-
-        UserAccount user1 = newUserAccount(madToken, StakeNFTLP_);
-        assertEq(address(user1).balance, 0);
-        UserAccount user2 = newUserAccount(madToken, StakeNFTLP_);
-        UserAccount user3 = newUserAccount(madToken, StakeNFTLP_);
-        UserAccount donator = newUserAccount(madToken, StakeNFTLP_);
-
-        madToken.transfer(address(user1), 10 * ONE_MADTOKEN);
-        madToken.transfer(address(user2), 10 * ONE_MADTOKEN);
-        madToken.transfer(address(user3), 10 * ONE_MADTOKEN);
-        madToken.transfer(address(donator), 100000 * ONE_MADTOKEN);
-
-        user1.approve(address(StakeNFTLP_), 10 * ONE_MADTOKEN);
-        user2.approve(address(StakeNFTLP_), 10 * ONE_MADTOKEN);
-        user3.approve(address(StakeNFTLP_), 10 * ONE_MADTOKEN);
-        donator.approve(address(StakeNFTLP_), 100000 * ONE_MADTOKEN);
-        payable(address(donator)).transfer(100000 ether);
-
-        uint256 sharesPerUser = 10 * ONE_MADTOKEN;
-        uint256 tokenID1 = user1.mint(sharesPerUser);
-        setBlockNumber(block.number + 2);
-        {
-            uint256 payout;
-            assertEq(payout, 0);
-            payout = user1.collectEth(tokenID1);
-            assertEq(payout, 0);
-        }
-        uint256 tokenID2 = user2.mint(sharesPerUser);
-        uint256 tokenID3 = user3.mint(sharesPerUser);
-        assertReserveAndExcess(
-            StakeNFTLP_,
-            30 * ONE_MADTOKEN,
-            100 ether + 1
-        );
-
-        setBlockNumber(block.number + 2);
-
-        uint256 credits = 0;
-        uint256 debits = 0;
-        for (uint256 i = 0; i < 2; i++) {
-            donator.depositEth(1000);
-            credits += 1000;
-            uint256 payout = user1.collectEth(tokenID1);
-            assertEq(payout, 330);
-            debits += payout;
-            uint256 payout2 = user2.collectEth(tokenID2);
-            assertEq(payout2, 330);
-            debits += payout2;
-            uint256 payout3 = user3.collectEth(tokenID3);
-            assertEq(payout3, 330);
-            debits += payout3;
-        }
-        {
-            emit log_named_uint("Balance ETH: ", address(StakeNFTLP_).balance);
-            (, uint256 slush) = StakeNFTLP_.getEthAccumulator();
-            assertEq(slush, (credits - debits) * 10**18);
-            assertReserveAndExcess(
-                StakeNFTLP_,
-                30 * ONE_MADTOKEN,
-                100 ether + 1
-            );
-        }
-        {
-            donator.depositEth(2000);
-            credits += 2000;
-            assertReserveAndExcess(
-                StakeNFTLP_,
-                30 * ONE_MADTOKEN,
-                100 ether + 1
-            );
-            uint256 payout = user1.collectEth(tokenID1);
-            assertEq(payout, 670);
-            debits += payout;
-            uint256 payout2 = user2.collectEth(tokenID2);
-            assertEq(payout2, 670);
-            debits += payout2;
-            uint256 payout3 = user3.collectEth(tokenID3);
-            assertEq(payout3, 670);
-            debits += payout3;
-        }
-        {
-            (, uint256 slush) = StakeNFTLP_.getEthAccumulator();
-            assertEq(slush, (credits - debits) * 10**18);
-            assertEq(slush, 10 * 10**18);
-        }
-        assertReserveAndExcess(
-            StakeNFTLP_,
-            30 * ONE_MADTOKEN + 20,
-            100 ether + 1
-        );
-        {
-            (, uint256 slush) = StakeNFTLP_.getEthAccumulator();
-            assertEq(slush, (credits - debits) * 10**18);
-            assertEq(slush, 10 * 10**18);
-        }
-        assertEq(
-            madToken.balanceOf(address(StakeNFTLP_)),
-            1000 * ONE_MADTOKEN + 1 + 30 * ONE_MADTOKEN + 20
-        );
-
-        madToken.transfer(
-            address(0xf5a2fE45F4f1308502b1C136b9EF8af136141382),
-            100 * ONE_MADTOKEN + 1
-        );
-        {
-            uint256 payoutEth = user1.burn(tokenID1);
-            assertEq(payoutEth, 0);
-            assertEq(StakeNFTLP_.balanceOf(address(user1)), 0);
-            assertReserveAndExcess(
-                StakeNFTLP_,
-                20 * ONE_MADTOKEN + 20,
-                100 ether + 1
-            );
-
-            payoutEth = user2.burn(tokenID2);
-            assertEq(payoutEth, 0);
-            assertEq(StakeNFTLP_.balanceOf(address(user2)), 0);
-            assertReserveAndExcess(
-                StakeNFTLP_,
-                10 * ONE_MADTOKEN + 20,
-                100 ether + 1
-            );
-
-            // last user gets the slush as well
-            payoutEth = user3.burn(tokenID3);
-            assertEq(payoutEth, (credits - debits));
-            assertEq(StakeNFTLP_.balanceOf(address(user3)), 0);
-            assertReserveAndExcess(
-                StakeNFTLP_,
-                100 * ONE_MADTOKEN + 1,
-                100 ether + 1
-            );
-        }
-
-        assertEq(address(StakeNFTLP_).balance, 100 ether + 1);
-        admin.skimExcessEth(address(user1));
-        assertEq(address(user1).balance, 1330 + 100 ether + 1);
-        assertEq(address(StakeNFTLP_).balance, 0);
-
-        assertEq(madToken.balanceOf(address(StakeNFTLP_)), 100 * ONE_MADTOKEN + 1);
-        assertReserveAndExcess(StakeNFTLP_, 0, 0);
-
-        assertEq(madToken.balanceOf(address(StakeNFTLP_)), 0);
-    }
-
-    function test_ReentrantSkimExcessEth() public {
-        // transferring money before the contract is created
-        payable(address(0xf5a2fE45F4f1308502b1C136b9EF8af136141382)).transfer(
+        payable(address(0xEFc56627233b02eA95bAE7e19F648d7DcD5Bb132)).transfer(
             100 ether
         );
         (
@@ -1929,7 +1771,7 @@ contract StakeNFTLPTest is DSTest {
 
     function testFail_ReentrantNoAdmin() public {
         // transferring money before the contract is created
-        payable(address(0xf5a2fE45F4f1308502b1C136b9EF8af136141382)).transfer(
+        payable(address(0xEFc56627233b02eA95bAE7e19F648d7DcD5Bb132)).transfer(
             100 ether
         );
         (
@@ -1951,7 +1793,7 @@ contract StakeNFTLPTest is DSTest {
 
         payable(address(donator)).transfer(2000 ether);
 
-        uint256 tokenID = user.mint(100);
+        user.mint(100);
         uint256 honestTokenID = honestUser.mint(100);
 
         setBlockNumber(block.number + 2);
