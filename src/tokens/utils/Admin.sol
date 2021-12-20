@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: MIT-open-group
 pragma solidity ^0.8.0;
 
+import "../../../lib/openzeppelin/proxy/utils/Initializable.sol";
 
-abstract contract Admin {
+abstract contract Admin is Initializable{
 
     // _admin is a privileged role
     address _admin;
-
-    constructor(address admin_) {
+    //this replaces the constructor with a function that is called once
+    //TODO: decide if we should make it accessable by factory 
+    function __Admin_init(address admin_) internal initializer {
         _admin = admin_;
     }
 

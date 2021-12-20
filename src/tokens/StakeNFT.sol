@@ -80,7 +80,7 @@ contract StakeNFT is ERC721, MagicValue, Admin, Governance, CircuitBreaker, Atom
     uint256 _reserveToken;
 
 
-    constructor(IERC20Transfer MadToken_, address admin_, address governance_) ERC721("MNStake","MNS") Governance(governance_) Admin(admin_) {
+    constructor(IERC20Transfer MadToken_, address admin_, address governance_) ERC721("MNStake","MNS") Governance(governance_) {
         _MadToken = MadToken_;
     }
 

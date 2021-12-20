@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT-open-group
 pragma solidity >=0.5.15;
+import "../lib/openzeppelin/proxy/utils/Initializable.sol";
 
-contract SimpleAuth  {
+abstract contract SimpleAuth is Initializable {
 
     mapping(address => bool) private authorizedOperators_;
     uint private authorizedOperatorCount_;
 
     address private owner_;
-
-    constructor() {
+    
+    function __SimpleAuth_init() internal initializer {
         owner_ = msg.sender;
         grantOperator(owner_);
     }

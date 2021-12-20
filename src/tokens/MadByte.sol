@@ -1,15 +1,18 @@
 // SPDX-License-Identifier: MIT-open-group
 pragma solidity ^0.8.0;
 
-import "../../lib/openzeppelin/token/ERC20/ERC20.sol";
+import "../../lib/openzeppelin/token/ERC20/ERC20Initializable.sol";
+import "../../lib/openzeppelin/proxy/utils/Initializable.sol";
+
 import "./utils/Admin.sol";
 import "./utils/Mutex.sol";
 import "./utils/MagicEthTransfer.sol";
 import "./utils/EthSafeTransfer.sol";
 import "./math/Sigmoid.sol";
+import "../../lib/utils/DeterministicAddress.sol";
 
 
-contract MadByte is ERC20, Admin, Mutex, MagicEthTransfer, EthSafeTransfer, Sigmoid {
+contract MadByte is ERC20Initializable, Admin, Mutex, MagicEthTransfer, EthSafeTransfer, Sigmoid, DeterministicAddress {
 
     /// @notice Event emitted when a deposit is received
     event DepositReceived(uint256 indexed depositID, address indexed depositor, uint256 amount);
@@ -56,7 +59,7 @@ contract MadByte is ERC20, Admin, Mutex, MagicEthTransfer, EthSafeTransfer, Sigm
     // of owners with BN addresses. Key is deposit id, value is the BN address
     // (4x bytes32) of owner of a deposit.
     mapping(uint256 => BNAddress) _depositorsBN;
-
+    address _factory;
     // Staking contracts addresses
     IMagicEthTransfer _madStaking;
     IMagicEthTransfer _minerStaking;
@@ -64,13 +67,18 @@ contract MadByte is ERC20, Admin, Mutex, MagicEthTransfer, EthSafeTransfer, Sigm
     // Foundation contract address
     IMagicEthTransfer _foundation;
 
-    constructor(address admin_, address madStaking_, address minerStaking_, address lpStaking_, address foundation_) ERC20("MadByte", "MB") Admin(admin_) Mutex() {
-        _madStaking = IMagicEthTransfer(madStaking_);
-        _minerStaking = IMagicEthTransfer(minerStaking_);
-        _lpStaking = IMagicEthTransfer(lpStaking_);
-        _foundation = IMagicEthTransfer(foundation_);
+    
+    function initialize(address admin_)public initializer {
+        __ERC20_init("MadByte", "MB");
+        __Admin_init(admin_);
+        //the initializer will be called from the factory
+        _factory = msg.sender;
+        
+        _madStaking = IMagicEthTransfer(getSwitcherooContractAddress(bytes32("StakeNFT"), _factory));
+        _minerStaking = IMagicEthTransfer(getSwitcherooContractAddress(bytes32("ValidatorStakeNFT"), _factory));
+        _lpStaking = IMagicEthTransfer(getSwitcherooContractAddress(bytes32("StakeNFTLP"), _factory));
+        _foundation = IMagicEthTransfer(getSwitcherooContractAddress(bytes32("Foundation"), _factory));
     }
-
     /// @dev sets the miner staking contract, must only be called by _admin.
     function setMinerStaking(address minerStaking_) public onlyAdmin {
         _minerStaking = IMagicEthTransfer(minerStaking_);
@@ -306,7 +314,7 @@ contract MadByte is ERC20, Admin, Mutex, MagicEthTransfer, EthSafeTransfer, Sigm
     function _destroyTokens(uint256 nuMB_) internal returns (bool) {
         require(nuMB_ != 0, "MadByte: The number of MadBytes to be burn should be greater than 0!");
         _poolBalance -= _MBtoEth(_poolBalance, totalSupply(), nuMB_);
-        ERC20._burn(msg.sender, nuMB_);
+        ERC20Initializable._burn(msg.sender, nuMB_);
         return true;
     }
 
@@ -384,7 +392,7 @@ contract MadByte is ERC20, Admin, Mutex, MagicEthTransfer, EthSafeTransfer, Sigm
         require(nuMB >= minMB_, "MadByte: could not mint minimum MadBytes");
         poolBalance += numEth_;
         _poolBalance = poolBalance;
-        ERC20._mint(to_, nuMB);
+        ERC20Initializable._mint(to_, nuMB);
         return nuMB;
     }
 
@@ -397,7 +405,7 @@ contract MadByte is ERC20, Admin, Mutex, MagicEthTransfer, EthSafeTransfer, Sigm
         require(numEth >= minEth_, "MadByte: Couldn't burn the minEth amount");
         poolBalance -= numEth;
         _poolBalance = poolBalance;
-        ERC20._burn(from_, nuMB_);
+        ERC20Initializable._burn(from_, nuMB_);
         _safeTransferEth(to_, numEth);
         return numEth;
     }

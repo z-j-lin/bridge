@@ -5,12 +5,9 @@ pragma solidity ^0.8.0;
 abstract contract Mutex {
 
     uint256 constant LOCKED = 1;
-    uint256 constant UNLOCKED = 2;
+    uint256 constant UNLOCKED = 0;
     uint256 _mutex;
 
-    constructor() {
-        _mutex = UNLOCKED;
-    }
 
     modifier withLock() {
         require(_mutex != LOCKED, "Mutex: Couldn't acquire the lock!");
