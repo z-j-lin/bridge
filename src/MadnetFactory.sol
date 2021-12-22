@@ -30,12 +30,28 @@ contract MadnetFactory is DeterministicAddress {
     constructor() {
         owner_ = msg.sender;
     }
-    
+    function multicall(bytes[] calldata cdata) external onlyOwner returns (bytes memory) {
+            for (uint256 i = 0; i < cdata.length ;i++ ) { 
+                bytes calldata obj = cdata[i];
+                assembly{
+                    let ptr:= add(0x20, msize())
+                    calldatacopy(ptr, obj.offset, obj.length)
+                    if iszero(call(gas(), address(), 0, ptr, obj.length, 0x00, 0x00)) {
+                        mstore(0x00, 0x00)
+                        revert(0x00, 0x20)
+                    }
+                    if eq(i, sub(cdata.length,1)) {
+                        returndatacopy(0x00,0x00,returndatasize())
+                        return(0x00, returndatasize())
+                    }
+            }
+        }
+    }
     function deploy( 
     bytes32 _salt,
     bytes calldata _initiator
     ) 
-    external payable onlyOwner returns (address) { 
+    internal onlyOwner returns (address) { 
         //determine the address of the switcheroo contract with the address 
         address contractAddr;
         address switcheroo = getSwitcherooContractAddress(_salt, address(this));
@@ -46,13 +62,15 @@ contract MadnetFactory is DeterministicAddress {
             contractAddr := create2(0, ptr, 0x20, _salt)
         }
         
-        if (_initiator.length > 0){
+        if (_initiator.length > 0) {
             initializeContract(contractAddr, _initiator);
         }
         //add the salt to the list of contract names
         contracts_.push(_salt);
         //add the address to contract address mapping 
         registry_[_salt] = contractAddr; 
+        //destroy implementation
+        destroy(implementation_);
         emit Deployed(_salt, contractAddr);
         return switcheroo;
     }
@@ -90,6 +108,7 @@ contract MadnetFactory is DeterministicAddress {
                 revert(0,0)
             }
         }
+        setImplementation(contractAddress);
         emit DeployedTemplate(contractAddress);
         return contractAddress;        
     }
