@@ -25,15 +25,15 @@ contract MadByte is ERC20Initializable, Admin, Mutex, MagicEthTransfer, EthSafeT
     uint256 constant madUnitOne = 1000;
 
     // Balance in ether that is hold in the contract after minting and burning
-    uint256 _poolBalance = 0;
+    uint256 _poolBalance;
 
     // Value of the percentages that will send to each staking contract. Divide
     // this value by madUnitOne = 1000 to get the corresponding percentages.
     // These values must sum to 1000.
-    uint256 _minerStakingSplit = 333;
-    uint256 _madStakingSplit = 332;
-    uint256 _lpStakingSplit = 332;
-    uint256 _protocolFee = 3;
+    uint256 _minerStakingSplit;
+    uint256 _madStakingSplit;
+    uint256 _lpStakingSplit;
+    uint256 _protocolFee;
 
     // struct to define a BNAddress
     struct BNAddress {
@@ -44,10 +44,10 @@ contract MadByte is ERC20Initializable, Admin, Mutex, MagicEthTransfer, EthSafeT
     }
 
     // Monotonically increasing variable to track the MadBytes deposits.
-    uint256 _depositID = 0;
+    uint256 _depositID;
     // Total amount of MadBytes that were deposited in the MadNet chain. The
     // MadBytes deposited in the Madnet are burned by this contract.
-    uint256 _totalDeposited = 0;
+    uint256 _totalDeposited;
 
     // Tracks the amount of each deposit. Key is deposit id, value is amount
     // deposited.
@@ -78,6 +78,11 @@ contract MadByte is ERC20Initializable, Admin, Mutex, MagicEthTransfer, EthSafeT
         _minerStaking = IMagicEthTransfer(getSwitcherooContractAddress(bytes32("ValidatorStakeNFT"), _factory));
         _lpStaking = IMagicEthTransfer(getSwitcherooContractAddress(bytes32("StakeNFTLP"), _factory));
         _foundation = IMagicEthTransfer(getSwitcherooContractAddress(bytes32("Foundation"), _factory));
+
+        _minerStakingSplit = 333;
+        _madStakingSplit = 332;
+        _lpStakingSplit = 332;
+        _protocolFee = 3;
     }
     /// @dev sets the miner staking contract, must only be called by _admin.
     function setMinerStaking(address minerStaking_) public onlyAdmin {

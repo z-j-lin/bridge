@@ -7,5 +7,10 @@ describe("MadnetFactory", function () {
         const MadByte = await ethers.getContractFactory("MadByte");
         const madbyte = await MadByte.deploy();
         await madbyte.deployed();
+        const MadnetFactory = await ethers.getContractFactory("MadnetFactory");
+        const madnetFactory = await MadnetFactory.deploy();
+        await madnetFactory.deployed();
+        await madnetFactory.initialize();
+        await madnetFactory.deployTemplate(MadByte.bytecode);
     });
 });

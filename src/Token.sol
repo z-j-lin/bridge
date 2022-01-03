@@ -17,15 +17,15 @@ contract Token is DSToken, SimpleAuth {
     uint constant initialSupply = 1_000_000_000_000_000_000_000_000_000_000;
     TokenAuthority authority_ = new TokenAuthority();
 
-    constructor(bytes32 symbol_, bytes32 name_) DSToken(symbol_) {
-        setAuthority(authority_);
-        name = name_;
+    constructor(/*bytes32 symbol_, bytes32 name_,*/ bytes memory) DSToken(0x00) {
+        //setAuthority(DSAuth0x0000000000000000000000000000000000000000000000000000000000000001ority(msg.sender));
+        //name = name_;
 
-        authority_.grantOperator(msg.sender);
+        //authority_.grantOperator(msg.sender);
 
         decimals = 18;
 
-        mint(msg.sender, initialSupply);
+        //mint(msg.sender, initialSupply);
     }
 
     function grantOperator(address _operator) public override onlyOperator {
