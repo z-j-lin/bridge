@@ -3,8 +3,8 @@ pragma solidity ^0.8.0;
 
 abstract contract DeterministicAddress {
     // byte code for the switcheroo contract
-    // 59595959335afa503d59593e3434343434515af4503d34343e3d34f3fe
-    bytes32 constant metamorphicContractBytecodeHash_ = 0x198f7b5a60c96cccfd00aeb88e371aadec27ad304ebcec2b7d70ebbcd03e425e;
+    // 6020363636335afa1536363636515af43d36363e3d36f3
+    bytes32 constant metamorphicContractBytecodeHash_ = 0x1c0bf703a3415cada9785e89e9d70314c3111ae7d8e04f33bb42eb1d264088be;
     function getMetamorphicContractAddress(bytes32 _salt, address _factory) public pure returns (address){
         return address(
             uint160(

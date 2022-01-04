@@ -1,16 +1,16 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/home/zj/work/mn/bridge/src/tokens/interfaces/ICBCloser.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "f998402919c4513a9eaeada7d59b681f",
-      "sourceName": "src/tokens/interfaces/ICBCloser.sol",
+    "/home/zj/work/mn/bridge/src/AccusationManager.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "5659063380866e6cc6bfdb3b66fc48d1",
+      "sourceName": "src/AccusationManager.sol",
       "solcConfig": {
         "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -19,33 +19,41 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        ">=0.5.15"
       ],
       "artifacts": [
-        "ICBCloser"
+        "AccusationEvents",
+        "AccusationManager"
       ]
     },
-    "/home/zj/work/mn/bridge/src/tokens/interfaces/ICBOpener.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "8ca11eec4ecfe190fb78b3a27d91b078",
-      "sourceName": "src/tokens/interfaces/ICBOpener.sol",
+    "/home/zj/work/mn/bridge/src/Constants.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "ac82076e07b751245603d172a111ded1",
+      "sourceName": "src/Constants.sol",
       "solcConfig": {
         "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -54,12 +62,732 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "Constants"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/migrate/MigrateStakingFacet.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "67ad8e11cc99a35a6073edc55df2bf82",
+      "sourceName": "src/diamonds/migrate/MigrateStakingFacet.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/StakingEvents.sol",
+        "../facets/AccessControlLibrary.sol",
+        "../facets/SnapshotsLibrary.sol",
+        "../facets/StakingLibrary.sol",
+        "../facets/StopLibrary.sol",
+        "../../Constants.sol",
+        "../../Registry.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.4"
+      ],
+      "artifacts": [
+        "MigrateStakingFacet"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/StakingEvents.sol": {
+      "lastModificationDate": 1638235373966,
+      "contentHash": "87fcfad83e128baf6611c3a5bddabf9b",
+      "sourceName": "src/diamonds/interfaces/StakingEvents.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "StakingEvents"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/AccessControlLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "35687df05f6c6c3d48bfb304fdb768d6",
+      "sourceName": "src/diamonds/facets/AccessControlLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./ParticipantsLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "AccessControlLibrary",
+        "AccessControlled"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/SnapshotsLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "0ae4919a60420b71f825f763bf7ec281",
+      "sourceName": "src/diamonds/facets/SnapshotsLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./ChainStatusLibrary.sol",
+        "./ParticipantsLibrary.sol",
+        "./StakingLibrary.sol",
+        "../../parsers/RCertParserLibrary.sol",
+        "../../CryptoLibrary.sol",
+        "../../Registry.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "SnapshotsLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/StakingLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "fc4d043851c2971878b97d0bb3868c82",
+      "sourceName": "src/diamonds/facets/StakingLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/Token.sol",
+        "./SnapshotsLibrary.sol",
+        "../../Constants.sol",
+        "../../Registry.sol",
+        "../../SafeMath.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "StakingLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/StopLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "ca3e931f0554be56d3ba5ef132e668d6",
+      "sourceName": "src/diamonds/facets/StopLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./AccessControlLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "StopLibrary",
+        "Stoppable"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/Registry.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "edd79b14fd391a7d2fda6d0313800a5e",
+      "sourceName": "src/Registry.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./SimpleAuth.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "Registry",
+        "RegistryClient"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/ParticipantsLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "1a88bd3fa64ba30e129184efbcc1fde9",
+      "sourceName": "src/diamonds/facets/ParticipantsLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./StakingLibrary.sol",
+        "../../QueueLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "ParticipantsLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/QueueLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "5c30d3644ba42c01b9f2172aea39ef46",
+      "sourceName": "src/QueueLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./SafeMath.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "QueueLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Token.sol": {
+      "lastModificationDate": 1638235373966,
+      "contentHash": "caccfca273d0157e03522fc396805108",
+      "sourceName": "src/diamonds/interfaces/Token.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "BasicERC20",
+        "MintableERC20"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/SafeMath.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "459e2f98438101ff91887c5d320d7c10",
+      "sourceName": "src/SafeMath.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">0.4.13"
+      ],
+      "artifacts": [
+        "SafeMath"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/ChainStatusLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "9f3b041167da750bc3fe535f404662c4",
+      "sourceName": "src/diamonds/facets/ChainStatusLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "ChainStatusLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/parsers/RCertParserLibrary.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "f2ba66fe93fbb20b3501dc7384d2ba74",
+      "sourceName": "src/parsers/RCertParserLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./BaseParserLibrary.sol",
+        "./RClaimsParserLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "RCertParserLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/CryptoLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "5b96d3ec6e5a44f9d3a81bd2e48e4bfb",
+      "sourceName": "src/CryptoLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "CryptoLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/SimpleAuth.sol": {
+      "lastModificationDate": 1641227380336,
+      "contentHash": "8c66b87bc643a63f1e3737cc12b7c58c",
+      "sourceName": "src/SimpleAuth.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../lib/openzeppelin/proxy/utils/Initializable.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "SimpleAuth"
+      ]
+    },
+    "/home/zj/work/mn/bridge/lib/openzeppelin/proxy/utils/Initializable.sol": {
+      "lastModificationDate": 1641227380216,
+      "contentHash": "cbb8386f0120d46d66ff42dffbbc16c1",
+      "sourceName": "lib/openzeppelin/proxy/utils/Initializable.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -68,11 +796,2184 @@
         "^0.8.0"
       ],
       "artifacts": [
-        "ICBOpener"
+        "Initializable"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/parsers/BaseParserLibrary.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "3bb1bcda6d5716fbe0a7340d266708ac",
+      "sourceName": "src/parsers/BaseParserLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "BaseParserLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/parsers/RClaimsParserLibrary.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "14dc0898d8294593649e37b633f4d794",
+      "sourceName": "src/parsers/RClaimsParserLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./BaseParserLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "RClaimsParserLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/migrate/MigrateParticipantsFacet.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "1b59c02620714d48546dd661e6ff0153",
+      "sourceName": "src/diamonds/migrate/MigrateParticipantsFacet.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../facets/AccessControlLibrary.sol",
+        "../facets/ParticipantsLibrary.sol",
+        "../facets/StakingLibrary.sol",
+        "../facets/StopLibrary.sol",
+        "../../Constants.sol",
+        "../../Registry.sol",
+        "../../SafeMath.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.4"
+      ],
+      "artifacts": [
+        "MigrateParticipantsFacet"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/TokenMigrator.sol": {
+      "lastModificationDate": 1641298797892,
+      "contentHash": "dcd6b66fab892a01ae1fce742b2a7500",
+      "sourceName": "src/TokenMigrator.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../lib/ds-token/token.sol",
+        "./SafeMath.sol",
+        "./SimpleAuth.sol",
+        "./diamonds/interfaces/Token.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "TokenMigrator",
+        "TokenMigratorEvents"
+      ]
+    },
+    "/home/zj/work/mn/bridge/lib/ds-token/token.sol": {
+      "lastModificationDate": 1641123634623,
+      "contentHash": "e0e233cacff72893dc7840ad15229aa2",
+      "sourceName": "lib/ds-token/token.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../ds-math/math.sol",
+        "../ds-auth/auth.sol"
+      ],
+      "versionPragmas": [
+        ">=0.4.23"
+      ],
+      "artifacts": [
+        "DSToken"
+      ]
+    },
+    "/home/zj/work/mn/bridge/lib/ds-math/math.sol": {
+      "lastModificationDate": 1638235373742,
+      "contentHash": "58f687ca879bcd833fcdf3084d718cb5",
+      "sourceName": "lib/ds-math/math.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">0.4.13"
+      ],
+      "artifacts": [
+        "DSMath"
+      ]
+    },
+    "/home/zj/work/mn/bridge/lib/ds-auth/auth.sol": {
+      "lastModificationDate": 1641124764805,
+      "contentHash": "642e0e2a69a8594fb6b61107c9fdf93b",
+      "sourceName": "lib/ds-auth/auth.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.23"
+      ],
+      "artifacts": [
+        "DSAuth",
+        "DSAuthEvents",
+        "DSAuthority"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/StakingFacet.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "10305e06121163f0ce96d39074c4b3f7",
+      "sourceName": "src/diamonds/facets/StakingFacet.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/StakingEvents.sol",
+        "./AccessControlLibrary.sol",
+        "./ChainStatusLibrary.sol",
+        "./SnapshotsLibrary.sol",
+        "./StakingLibrary.sol",
+        "./StopLibrary.sol",
+        "../../Constants.sol",
+        "../../Registry.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.4"
+      ],
+      "artifacts": [
+        "StakingFacet"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/SnapshotsFacet.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "da594e02d2488c952f4f2b16e0a5d1df",
+      "sourceName": "src/diamonds/facets/SnapshotsFacet.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/SnapshotsEvents.sol",
+        "./AccessControlLibrary.sol",
+        "./ChainStatusLibrary.sol",
+        "./SnapshotsLibrary.sol",
+        "./StopLibrary.sol",
+        "../../Constants.sol",
+        "../../CryptoLibrary.sol",
+        "../../Registry.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.4"
+      ],
+      "artifacts": [
+        "SnapshotsFacet"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/SnapshotsEvents.sol": {
+      "lastModificationDate": 1638235373966,
+      "contentHash": "d3cb44fa8b34cff100f091fca0b9ce39",
+      "sourceName": "src/diamonds/interfaces/SnapshotsEvents.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "SnapshotsEvents"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/ValidatorLocationsLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "5889348ee168c4a2ca49989a8b403405",
+      "sourceName": "src/diamonds/facets/ValidatorLocationsLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./MerkleProofLibrary.sol",
+        "./ChainStatusLibrary.sol",
+        "./ParticipantsLibrary.sol",
+        "./SnapshotsLibrary.sol",
+        "../../parsers/PClaimsParserLibrary.sol",
+        "../../parsers/RCertParserLibrary.sol",
+        "../../parsers/MerkleProofParserLibrary.sol",
+        "../../parsers/TXInPreImageParserLibrary.sol",
+        "../../CryptoLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "ValidatorLocationsLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/MerkleProofLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "f1af8b1e7603fba3195c852d912204f8",
+      "sourceName": "src/diamonds/facets/MerkleProofLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../../parsers/MerkleProofParserLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "MerkleProofLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/parsers/PClaimsParserLibrary.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "153cb1c96ee4403f42c42937b31910d9",
+      "sourceName": "src/parsers/PClaimsParserLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./BaseParserLibrary.sol",
+        "./BClaimsParserLibrary.sol",
+        "./RCertParserLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "PClaimsParserLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/parsers/MerkleProofParserLibrary.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "0dc80ca39473992615fbf3e02992ae9d",
+      "sourceName": "src/parsers/MerkleProofParserLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./BaseParserLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "MerkleProofParserLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/parsers/TXInPreImageParserLibrary.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "697909004938f09e01d2b20efa55411d",
+      "sourceName": "src/parsers/TXInPreImageParserLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./BaseParserLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "TXInPreImageParserLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/parsers/BClaimsParserLibrary.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "a62a6fa1fa37be0afca01bc152f33930",
+      "sourceName": "src/parsers/BClaimsParserLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./BaseParserLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "BClaimsParserLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/AccusationLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "12feb0fcd5a0d4d11a4164d78dcb6490",
+      "sourceName": "src/diamonds/facets/AccusationLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./MerkleProofLibrary.sol",
+        "./ChainStatusLibrary.sol",
+        "./ParticipantsLibrary.sol",
+        "./SnapshotsLibrary.sol",
+        "../../parsers/PClaimsParserLibrary.sol",
+        "../../parsers/RCertParserLibrary.sol",
+        "../../parsers/MerkleProofParserLibrary.sol",
+        "../../parsers/TXInPreImageParserLibrary.sol",
+        "../../CryptoLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "AccusationLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/AccusationMultipleProposalFacet.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "a322ca5451c7799ae178a5b73236836a",
+      "sourceName": "src/diamonds/facets/AccusationMultipleProposalFacet.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./AccusationLibrary.sol",
+        "../interfaces/AccusationEvents.sol",
+        "../../SafeMath.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "AccusationMultipleProposalFacet"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/AccusationEvents.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "2606d649958d7f3f7f78725bc2221011",
+      "sourceName": "src/diamonds/interfaces/AccusationEvents.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "AccusationEvents"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Accusation.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "daab9d3d7b17544dd4f6e85cf9fe0a61",
+      "sourceName": "src/diamonds/interfaces/Accusation.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./AccusationEvents.sol",
+        "../../Registry.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "Accusation"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/AccusationInvalidTransactionConsumptionFacet.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "51037398d71b50bdde16a75f1d400a17",
+      "sourceName": "src/diamonds/facets/AccusationInvalidTransactionConsumptionFacet.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./AccusationLibrary.sol",
+        "../interfaces/AccusationEvents.sol",
+        "../../SafeMath.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "AccusationInvalidTransactionConsumptionFacet"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/governance/Proposals/GovernanceProposeModifySnapshot.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "c2ea7fcdbcfcf84d8bed0e86bd3fc274",
+      "sourceName": "src/governance/Proposals/GovernanceProposeModifySnapshot.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../GovernanceProposal.sol",
+        "../../diamonds/facets/SnapshotsLibrary.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "GovernanceProposeModifySnapshot"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/governance/GovernanceProposal.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "118c5a5bfb0b3e9ac3715ce205bd49fa",
+      "sourceName": "src/governance/GovernanceProposal.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./GovernanceStorage.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "GovernanceProposal"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/governance/GovernanceStorage.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "4992fb4176edad3f60bfeb5c09a4f2d7",
+      "sourceName": "src/governance/GovernanceStorage.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../tokens/utils/AtomicCounter.sol",
+        "./GovernanceMaxLock.sol",
+        "../tokens/interfaces/INFTStake.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "GovernanceStorage"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/tokens/utils/AtomicCounter.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "d5e5b822cdda0623ba941955b1b7787f",
+      "sourceName": "src/tokens/utils/AtomicCounter.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "AtomicCounter"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/governance/GovernanceMaxLock.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "c56843a805c7a4005eb07e3caee4abcc",
+      "sourceName": "src/governance/GovernanceMaxLock.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "GovernanceMaxLock"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/tokens/interfaces/INFTStake.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "ecd77e440eedd150b578e7443fb47c49",
+      "sourceName": "src/tokens/interfaces/INFTStake.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "INFTStake"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/governance/Proposals/GovernanceProposeRestartETHDKG.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "f37a6fa35f4f00e8e8584b710256aa4c",
+      "sourceName": "src/governance/Proposals/GovernanceProposeRestartETHDKG.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../GovernanceProposal.sol",
+        "../../diamonds/facets/EthDKGLibrary.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "GovernanceProposeRestartETHDKG"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/EthDKGLibrary.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "d779cd07f83e120414854cd2bdb4b4ac",
+      "sourceName": "src/diamonds/facets/EthDKGLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/Validators.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.4"
+      ],
+      "artifacts": [
+        "EthDKGLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Validators.sol": {
+      "lastModificationDate": 1638235373966,
+      "contentHash": "9052045ebf86ef247f280ee6bab9998f",
+      "sourceName": "src/diamonds/interfaces/Validators.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./Participants.sol",
+        "./Snapshots.sol",
+        "./Staking.sol",
+        "./ValidatorsEvents.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "Validators"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Participants.sol": {
+      "lastModificationDate": 1638235373966,
+      "contentHash": "7eabfedf0845f1c0e9ecea496aae5c00",
+      "sourceName": "src/diamonds/interfaces/Participants.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./ParticipantsEvents.sol",
+        "../../Registry.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.4"
+      ],
+      "artifacts": [
+        "Participants"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Snapshots.sol": {
+      "lastModificationDate": 1638235373966,
+      "contentHash": "d9ef4907664806f0d7346d5adc9f295f",
+      "sourceName": "src/diamonds/interfaces/Snapshots.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./SnapshotsEvents.sol",
+        "../../Registry.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "Snapshots"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Staking.sol": {
+      "lastModificationDate": 1638235373966,
+      "contentHash": "8d85c092894dac8bda153660774b7d6c",
+      "sourceName": "src/diamonds/interfaces/Staking.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./StakingEvents.sol",
+        "../../Registry.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "Staking"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/ValidatorsEvents.sol": {
+      "lastModificationDate": 1638235373966,
+      "contentHash": "b1ea47b73c7d15321a7f78e73e8e94db",
+      "sourceName": "src/diamonds/interfaces/ValidatorsEvents.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./StakingEvents.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "ValidatorsEvents"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/ParticipantsEvents.sol": {
+      "lastModificationDate": 1638235373966,
+      "contentHash": "1197b797f7e168bd172318c7070dddd9",
+      "sourceName": "src/diamonds/interfaces/ParticipantsEvents.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "ParticipantsEvents"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/migrate/MigrateETHDKG.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "f9a1681fcd42a034560495272afeaf41",
+      "sourceName": "src/diamonds/migrate/MigrateETHDKG.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../facets/AccessControlLibrary.sol",
+        "../facets/EthDKGLibrary.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.4"
+      ],
+      "artifacts": [
+        "MigrateETHDKG"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/migrate/MigrateSnapshotsFacet.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "cf341dabfa2e3aa451fec9081dfebf3c",
+      "sourceName": "src/diamonds/migrate/MigrateSnapshotsFacet.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../facets/AccessControlLibrary.sol",
+        "../facets/SnapshotsLibrary.sol",
+        "../../Constants.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.4"
+      ],
+      "artifacts": [
+        "MigrateSnapshotsFacet"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/SudoFacet.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "8202f5be45e65e9dc6ea7264dcd3e01c",
+      "sourceName": "src/diamonds/facets/SudoFacet.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./AccessControlLibrary.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "SudoFacet"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/facets/ParticipantsFacet.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "8ffc740e8f28530720200b73ac9efcd1",
+      "sourceName": "src/diamonds/facets/ParticipantsFacet.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/Participants.sol",
+        "./AccessControlLibrary.sol",
+        "./ChainStatusLibrary.sol",
+        "./ParticipantsLibrary.sol",
+        "./StakingLibrary.sol",
+        "./StopLibrary.sol",
+        "../../Constants.sol",
+        "../../Registry.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.4"
+      ],
+      "artifacts": [
+        "ParticipantsFacet"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/governance/Proposals/GovernanceProposeEvictValidators.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "c3e017bf24207e2f73b808a9d5069be6",
+      "sourceName": "src/governance/Proposals/GovernanceProposeEvictValidators.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../GovernanceProposal.sol",
+        "../../diamonds/facets/ParticipantsLibrary.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "GovernanceProposeEvictValidators"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/Deposit.sol": {
+      "lastModificationDate": 1641227380336,
+      "contentHash": "85e6ac53193f1656e345e719d704267d",
+      "sourceName": "src/Deposit.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../lib/ds-stop/stop.sol",
+        "./diamonds/interfaces/Token.sol",
+        "./diamonds/interfaces/ValidatorsEvents.sol",
+        "./Constants.sol",
+        "./Registry.sol",
+        "./SafeMath.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "Deposit"
+      ]
+    },
+    "/home/zj/work/mn/bridge/lib/ds-stop/stop.sol": {
+      "lastModificationDate": 1638235373746,
+      "contentHash": "7f2f829f6fe56cf565590f296c144cd2",
+      "sourceName": "lib/ds-stop/stop.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../ds-auth/auth.sol",
+        "../ds-note/note.sol"
+      ],
+      "versionPragmas": [
+        ">=0.4.23"
+      ],
+      "artifacts": [
+        "DSStop"
+      ]
+    },
+    "/home/zj/work/mn/bridge/lib/ds-note/note.sol": {
+      "lastModificationDate": 1638235373746,
+      "contentHash": "69b488115c4cf760eeae100eb13b5079",
+      "sourceName": "lib/ds-note/note.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.23"
+      ],
+      "artifacts": [
+        "DSNote"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/Token.sol": {
+      "lastModificationDate": 1641227380336,
+      "contentHash": "88ee2e84b7d83586005ecb0a42d6cc7f",
+      "sourceName": "src/Token.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../lib/ds-token/token.sol",
+        "./SimpleAuth.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "Token",
+        "TokenAuthority"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/DirectGovernance.sol": {
+      "lastModificationDate": 1638235373962,
+      "contentHash": "191c7c31e30580e0c1514d930ab8f4ba",
+      "sourceName": "src/DirectGovernance.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./diamonds/interfaces/Governor.sol",
+        "./SimpleAuth.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "DirectGovernance"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Governor.sol": {
+      "lastModificationDate": 1638235373966,
+      "contentHash": "ef55bcb9540f33b00eea5b6a68619ec2",
+      "sourceName": "src/diamonds/interfaces/Governor.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./GovernorEvents.sol",
+        "../../Registry.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "Governor"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/diamonds/interfaces/GovernorEvents.sol": {
+      "lastModificationDate": 1638235373966,
+      "contentHash": "361d56926544348e68c65d96e1d97f3b",
+      "sourceName": "src/diamonds/interfaces/GovernorEvents.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../../Registry.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.15"
+      ],
+      "artifacts": [
+        "GovernorEvents"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/tokens/utils/Admin.sol": {
+      "lastModificationDate": 1641227380340,
+      "contentHash": "99542c4b653e28d72d5e9a66a7473472",
+      "sourceName": "src/tokens/utils/Admin.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../../../lib/openzeppelin/proxy/utils/Initializable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Admin"
       ]
     },
     "/home/zj/work/mn/bridge/src/tokens/StakeNFT.sol": {
-      "lastModificationDate": 1639971130665,
+      "lastModificationDate": 1641227380340,
       "contentHash": "c9eb0a5019b4f8030e4675f0bf021526",
       "sourceName": "src/tokens/StakeNFT.sol",
       "solcConfig": {
@@ -80,7 +2981,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -89,12 +2990,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -129,7 +3037,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -138,12 +3046,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -172,7 +3087,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -181,12 +3096,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -201,7 +3123,7 @@
       ]
     },
     "/home/zj/work/mn/bridge/src/governance/Governance.sol": {
-      "lastModificationDate": 1639160873804,
+      "lastModificationDate": 1641227380340,
       "contentHash": "0c1379225fa56e9b17261ee607818381",
       "sourceName": "src/governance/Governance.sol",
       "solcConfig": {
@@ -209,7 +3131,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -218,12 +3140,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -237,80 +3166,8 @@
         "Governance"
       ]
     },
-    "/home/zj/work/mn/bridge/src/governance/GovernanceMaxLock.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "c56843a805c7a4005eb07e3caee4abcc",
-      "sourceName": "src/governance/GovernanceMaxLock.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "GovernanceMaxLock"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/tokens/utils/Admin.sol": {
-      "lastModificationDate": 1639168526169,
-      "contentHash": "99542c4b653e28d72d5e9a66a7473472",
-      "sourceName": "src/tokens/utils/Admin.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../../lib/openzeppelin/proxy/utils/Initializable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Admin"
-      ]
-    },
     "/home/zj/work/mn/bridge/src/tokens/utils/EthSafeTransfer.sol": {
-      "lastModificationDate": 1639160873804,
+      "lastModificationDate": 1641227380340,
       "contentHash": "a21d5412f7937b44c5e2d9763f0c6e8f",
       "sourceName": "src/tokens/utils/EthSafeTransfer.sol",
       "solcConfig": {
@@ -318,7 +3175,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -327,12 +3184,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -345,7 +3209,7 @@
       ]
     },
     "/home/zj/work/mn/bridge/src/tokens/utils/ERC20SafeTransfer.sol": {
-      "lastModificationDate": 1639160873804,
+      "lastModificationDate": 1641227380340,
       "contentHash": "21c33ed1b17ab5277ce618d650b535ec",
       "sourceName": "src/tokens/utils/ERC20SafeTransfer.sol",
       "solcConfig": {
@@ -353,7 +3217,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -362,12 +3226,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -382,7 +3253,7 @@
       ]
     },
     "/home/zj/work/mn/bridge/src/tokens/utils/CircuitBreaker.sol": {
-      "lastModificationDate": 1639160873804,
+      "lastModificationDate": 1641227380340,
       "contentHash": "dc4fc770ab5505472fa923becab1d88c",
       "sourceName": "src/tokens/utils/CircuitBreaker.sol",
       "solcConfig": {
@@ -390,7 +3261,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -399,12 +3270,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -417,7 +3295,7 @@
       ]
     },
     "/home/zj/work/mn/bridge/src/tokens/utils/MagicValue.sol": {
-      "lastModificationDate": 1639160873804,
+      "lastModificationDate": 1641227380340,
       "contentHash": "c5205e9354f24d60833f5f553706aac6",
       "sourceName": "src/tokens/utils/MagicValue.sol",
       "solcConfig": {
@@ -425,7 +3303,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -434,12 +3312,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -451,16 +3336,16 @@
         "MagicValue"
       ]
     },
-    "/home/zj/work/mn/bridge/src/tokens/utils/AtomicCounter.sol": {
+    "/home/zj/work/mn/bridge/src/tokens/interfaces/ICBOpener.sol": {
       "lastModificationDate": 1638235373970,
-      "contentHash": "d5e5b822cdda0623ba941955b1b7787f",
-      "sourceName": "src/tokens/utils/AtomicCounter.sol",
+      "contentHash": "8ca11eec4ecfe190fb78b3a27d91b078",
+      "sourceName": "src/tokens/interfaces/ICBOpener.sol",
       "solcConfig": {
         "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -469,12 +3354,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -483,11 +3375,11 @@
         "^0.8.0"
       ],
       "artifacts": [
-        "AtomicCounter"
+        "ICBOpener"
       ]
     },
     "/home/zj/work/mn/bridge/src/tokens/interfaces/IERC721Transfer.sol": {
-      "lastModificationDate": 1639160873804,
+      "lastModificationDate": 1641227380340,
       "contentHash": "4f823446777ba5b2c5e8764f5843ba8e",
       "sourceName": "src/tokens/interfaces/IERC721Transfer.sol",
       "solcConfig": {
@@ -495,7 +3387,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -504,12 +3396,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -521,41 +3420,6 @@
         "IERC721Transfer"
       ]
     },
-    "/home/zj/work/mn/bridge/src/tokens/interfaces/INFTStake.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "ecd77e440eedd150b578e7443fb47c49",
-      "sourceName": "src/tokens/interfaces/INFTStake.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "INFTStake"
-      ]
-    },
     "/home/zj/work/mn/bridge/lib/openzeppelin/token/ERC721/IERC721Receiver.sol": {
       "lastModificationDate": 1638235373746,
       "contentHash": "9a367cecca6fed80a3e975b7e6b3bd5c",
@@ -565,7 +3429,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -574,12 +3438,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -600,7 +3471,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -609,12 +3480,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -637,7 +3515,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -646,12 +3524,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -672,7 +3557,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -681,12 +3566,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -707,7 +3599,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -716,12 +3608,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -742,7 +3641,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -751,12 +3650,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -779,7 +3685,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -788,12 +3694,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -814,7 +3727,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -823,12 +3736,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -844,82 +3764,8 @@
         "GovernanceManager"
       ]
     },
-    "/home/zj/work/mn/bridge/src/governance/GovernanceStorage.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "4992fb4176edad3f60bfeb5c09a4f2d7",
-      "sourceName": "src/governance/GovernanceStorage.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../tokens/utils/AtomicCounter.sol",
-        "./GovernanceMaxLock.sol",
-        "../tokens/interfaces/INFTStake.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "GovernanceStorage"
-      ]
-    },
-    "/home/zj/work/mn/bridge/lib/openzeppelin/proxy/utils/Initializable.sol": {
-      "lastModificationDate": 1639165853366,
-      "contentHash": "cbb8386f0120d46d66ff42dffbbc16c1",
-      "sourceName": "lib/openzeppelin/proxy/utils/Initializable.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Initializable"
-      ]
-    },
     "/home/zj/work/mn/bridge/src/tokens/interfaces/IERC20Transfer.sol": {
-      "lastModificationDate": 1639160873804,
+      "lastModificationDate": 1641227380340,
       "contentHash": "f4be6f71def008cdb5001c5c1ef32bd4",
       "sourceName": "src/tokens/interfaces/IERC20Transfer.sol",
       "solcConfig": {
@@ -927,7 +3773,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -936,12 +3782,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -954,7 +3807,7 @@
       ]
     },
     "/home/zj/work/mn/bridge/src/tokens/utils/MagicTokenTransfer.sol": {
-      "lastModificationDate": 1639160873804,
+      "lastModificationDate": 1641227380340,
       "contentHash": "4ccbf6301bda332c9c680547f0438270",
       "sourceName": "src/tokens/utils/MagicTokenTransfer.sol",
       "solcConfig": {
@@ -962,7 +3815,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -971,12 +3824,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1001,7 +3861,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -1010,12 +3870,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1036,7 +3903,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -1045,12 +3912,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1074,7 +3948,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -1083,12 +3957,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1101,15 +3982,15 @@
       ]
     },
     "/home/zj/work/mn/bridge/src/tokens/MadByte.sol": {
-      "lastModificationDate": 1639777510725,
-      "contentHash": "b4f6f8b57f952f3ed0350b5ca764450e",
+      "lastModificationDate": 1641251433099,
+      "contentHash": "abfbbe692dec047ca6c1539e93464911",
       "sourceName": "src/tokens/MadByte.sol",
       "solcConfig": {
         "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -1118,12 +3999,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1138,14 +4026,14 @@
         "../../lib/utils/DeterministicAddress.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.10"
       ],
       "artifacts": [
         "MadByte"
       ]
     },
     "/home/zj/work/mn/bridge/lib/openzeppelin/token/ERC20/ERC20Initializable.sol": {
-      "lastModificationDate": 1639776767404,
+      "lastModificationDate": 1641227380216,
       "contentHash": "0e44a633934a18138b7f4084df0fb782",
       "sourceName": "lib/openzeppelin/token/ERC20/ERC20Initializable.sol",
       "solcConfig": {
@@ -1153,7 +4041,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -1162,12 +4050,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1185,7 +4080,7 @@
       ]
     },
     "/home/zj/work/mn/bridge/src/tokens/utils/Mutex.sol": {
-      "lastModificationDate": 1639169068009,
+      "lastModificationDate": 1641227380340,
       "contentHash": "d3d84e4f10151202c2252bf63785f8fb",
       "sourceName": "src/tokens/utils/Mutex.sol",
       "solcConfig": {
@@ -1193,7 +4088,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -1202,12 +4097,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1228,7 +4130,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -1237,12 +4139,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1255,15 +4164,15 @@
       ]
     },
     "/home/zj/work/mn/bridge/lib/utils/DeterministicAddress.sol": {
-      "lastModificationDate": 1639605987612,
-      "contentHash": "94f29a2cd15b247f91a020ee74e98671",
+      "lastModificationDate": 1641298966943,
+      "contentHash": "84f68cbf46f2cddf33c436636073ae92",
       "sourceName": "lib/utils/DeterministicAddress.sol",
       "solcConfig": {
         "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -1272,18 +4181,23 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
-      "imports": [
-        "../openzeppelin/proxy/utils/Initializable.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
         "^0.8.0"
       ],
@@ -1300,7 +4214,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -1309,12 +4223,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1335,7 +4256,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -1344,12 +4265,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1363,2196 +4291,16 @@
         "IERC20Metadata"
       ]
     },
-    "/home/zj/work/mn/bridge/src/AccusationManager.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "5659063380866e6cc6bfdb3b66fc48d1",
-      "sourceName": "src/AccusationManager.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "AccusationEvents",
-        "AccusationManager"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/Constants.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "ac82076e07b751245603d172a111ded1",
-      "sourceName": "src/Constants.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "Constants"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/migrate/MigrateStakingFacet.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "67ad8e11cc99a35a6073edc55df2bf82",
-      "sourceName": "src/diamonds/migrate/MigrateStakingFacet.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../interfaces/StakingEvents.sol",
-        "../facets/AccessControlLibrary.sol",
-        "../facets/SnapshotsLibrary.sol",
-        "../facets/StakingLibrary.sol",
-        "../facets/StopLibrary.sol",
-        "../../Constants.sol",
-        "../../Registry.sol"
-      ],
-      "versionPragmas": [
-        ">=0.6.4"
-      ],
-      "artifacts": [
-        "MigrateStakingFacet"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/StakingEvents.sol": {
-      "lastModificationDate": 1638235373966,
-      "contentHash": "87fcfad83e128baf6611c3a5bddabf9b",
-      "sourceName": "src/diamonds/interfaces/StakingEvents.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "StakingEvents"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/AccessControlLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "35687df05f6c6c3d48bfb304fdb768d6",
-      "sourceName": "src/diamonds/facets/AccessControlLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./ParticipantsLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "AccessControlLibrary",
-        "AccessControlled"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/SnapshotsLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "0ae4919a60420b71f825f763bf7ec281",
-      "sourceName": "src/diamonds/facets/SnapshotsLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./ChainStatusLibrary.sol",
-        "./ParticipantsLibrary.sol",
-        "./StakingLibrary.sol",
-        "../../parsers/RCertParserLibrary.sol",
-        "../../CryptoLibrary.sol",
-        "../../Registry.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "SnapshotsLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/StakingLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "fc4d043851c2971878b97d0bb3868c82",
-      "sourceName": "src/diamonds/facets/StakingLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../interfaces/Token.sol",
-        "./SnapshotsLibrary.sol",
-        "../../Constants.sol",
-        "../../Registry.sol",
-        "../../SafeMath.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "StakingLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/StopLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "ca3e931f0554be56d3ba5ef132e668d6",
-      "sourceName": "src/diamonds/facets/StopLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./AccessControlLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "StopLibrary",
-        "Stoppable"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/Registry.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "edd79b14fd391a7d2fda6d0313800a5e",
-      "sourceName": "src/Registry.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./SimpleAuth.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "Registry",
-        "RegistryClient"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/ParticipantsLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "1a88bd3fa64ba30e129184efbcc1fde9",
-      "sourceName": "src/diamonds/facets/ParticipantsLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./StakingLibrary.sol",
-        "../../QueueLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "ParticipantsLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/QueueLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "5c30d3644ba42c01b9f2172aea39ef46",
-      "sourceName": "src/QueueLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./SafeMath.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "QueueLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Token.sol": {
-      "lastModificationDate": 1638235373966,
-      "contentHash": "caccfca273d0157e03522fc396805108",
-      "sourceName": "src/diamonds/interfaces/Token.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "BasicERC20",
-        "MintableERC20"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/SafeMath.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "459e2f98438101ff91887c5d320d7c10",
-      "sourceName": "src/SafeMath.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">0.4.13"
-      ],
-      "artifacts": [
-        "SafeMath"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/ChainStatusLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "9f3b041167da750bc3fe535f404662c4",
-      "sourceName": "src/diamonds/facets/ChainStatusLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "ChainStatusLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/parsers/RCertParserLibrary.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "f2ba66fe93fbb20b3501dc7384d2ba74",
-      "sourceName": "src/parsers/RCertParserLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./BaseParserLibrary.sol",
-        "./RClaimsParserLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "RCertParserLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/CryptoLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "5b96d3ec6e5a44f9d3a81bd2e48e4bfb",
-      "sourceName": "src/CryptoLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "CryptoLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/SimpleAuth.sol": {
-      "lastModificationDate": 1639441383106,
-      "contentHash": "8c66b87bc643a63f1e3737cc12b7c58c",
-      "sourceName": "src/SimpleAuth.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../lib/openzeppelin/proxy/utils/Initializable.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "SimpleAuth"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/parsers/BaseParserLibrary.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "3bb1bcda6d5716fbe0a7340d266708ac",
-      "sourceName": "src/parsers/BaseParserLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "BaseParserLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/parsers/RClaimsParserLibrary.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "14dc0898d8294593649e37b633f4d794",
-      "sourceName": "src/parsers/RClaimsParserLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./BaseParserLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "RClaimsParserLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/migrate/MigrateParticipantsFacet.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "1b59c02620714d48546dd661e6ff0153",
-      "sourceName": "src/diamonds/migrate/MigrateParticipantsFacet.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../facets/AccessControlLibrary.sol",
-        "../facets/ParticipantsLibrary.sol",
-        "../facets/StakingLibrary.sol",
-        "../facets/StopLibrary.sol",
-        "../../Constants.sol",
-        "../../Registry.sol",
-        "../../SafeMath.sol"
-      ],
-      "versionPragmas": [
-        ">=0.6.4"
-      ],
-      "artifacts": [
-        "MigrateParticipantsFacet"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/TokenMigrator.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "dcd6b66fab892a01ae1fce742b2a7500",
-      "sourceName": "src/TokenMigrator.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../lib/ds-token/token.sol",
-        "./SafeMath.sol",
-        "./SimpleAuth.sol",
-        "./diamonds/interfaces/Token.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "TokenMigrator",
-        "TokenMigratorEvents"
-      ]
-    },
-    "/home/zj/work/mn/bridge/lib/ds-token/token.sol": {
-      "lastModificationDate": 1638235373746,
-      "contentHash": "e0e233cacff72893dc7840ad15229aa2",
-      "sourceName": "lib/ds-token/token.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../ds-math/math.sol",
-        "../ds-auth/auth.sol"
-      ],
-      "versionPragmas": [
-        ">=0.4.23"
-      ],
-      "artifacts": [
-        "DSToken"
-      ]
-    },
-    "/home/zj/work/mn/bridge/lib/ds-math/math.sol": {
-      "lastModificationDate": 1638235373742,
-      "contentHash": "58f687ca879bcd833fcdf3084d718cb5",
-      "sourceName": "lib/ds-math/math.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">0.4.13"
-      ],
-      "artifacts": [
-        "DSMath"
-      ]
-    },
-    "/home/zj/work/mn/bridge/lib/ds-auth/auth.sol": {
-      "lastModificationDate": 1638235373742,
-      "contentHash": "642e0e2a69a8594fb6b61107c9fdf93b",
-      "sourceName": "lib/ds-auth/auth.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.4.23"
-      ],
-      "artifacts": [
-        "DSAuth",
-        "DSAuthEvents",
-        "DSAuthority"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/StakingFacet.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "10305e06121163f0ce96d39074c4b3f7",
-      "sourceName": "src/diamonds/facets/StakingFacet.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../interfaces/StakingEvents.sol",
-        "./AccessControlLibrary.sol",
-        "./ChainStatusLibrary.sol",
-        "./SnapshotsLibrary.sol",
-        "./StakingLibrary.sol",
-        "./StopLibrary.sol",
-        "../../Constants.sol",
-        "../../Registry.sol"
-      ],
-      "versionPragmas": [
-        ">=0.6.4"
-      ],
-      "artifacts": [
-        "StakingFacet"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/SnapshotsFacet.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "da594e02d2488c952f4f2b16e0a5d1df",
-      "sourceName": "src/diamonds/facets/SnapshotsFacet.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../interfaces/SnapshotsEvents.sol",
-        "./AccessControlLibrary.sol",
-        "./ChainStatusLibrary.sol",
-        "./SnapshotsLibrary.sol",
-        "./StopLibrary.sol",
-        "../../Constants.sol",
-        "../../CryptoLibrary.sol",
-        "../../Registry.sol"
-      ],
-      "versionPragmas": [
-        ">=0.6.4"
-      ],
-      "artifacts": [
-        "SnapshotsFacet"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/SnapshotsEvents.sol": {
-      "lastModificationDate": 1638235373966,
-      "contentHash": "d3cb44fa8b34cff100f091fca0b9ce39",
-      "sourceName": "src/diamonds/interfaces/SnapshotsEvents.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "SnapshotsEvents"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/ValidatorLocationsLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "5889348ee168c4a2ca49989a8b403405",
-      "sourceName": "src/diamonds/facets/ValidatorLocationsLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./MerkleProofLibrary.sol",
-        "./ChainStatusLibrary.sol",
-        "./ParticipantsLibrary.sol",
-        "./SnapshotsLibrary.sol",
-        "../../parsers/PClaimsParserLibrary.sol",
-        "../../parsers/RCertParserLibrary.sol",
-        "../../parsers/MerkleProofParserLibrary.sol",
-        "../../parsers/TXInPreImageParserLibrary.sol",
-        "../../CryptoLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "ValidatorLocationsLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/MerkleProofLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "f1af8b1e7603fba3195c852d912204f8",
-      "sourceName": "src/diamonds/facets/MerkleProofLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../parsers/MerkleProofParserLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "MerkleProofLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/parsers/PClaimsParserLibrary.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "153cb1c96ee4403f42c42937b31910d9",
-      "sourceName": "src/parsers/PClaimsParserLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./BaseParserLibrary.sol",
-        "./BClaimsParserLibrary.sol",
-        "./RCertParserLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "PClaimsParserLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/parsers/MerkleProofParserLibrary.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "0dc80ca39473992615fbf3e02992ae9d",
-      "sourceName": "src/parsers/MerkleProofParserLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./BaseParserLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "MerkleProofParserLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/parsers/TXInPreImageParserLibrary.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "697909004938f09e01d2b20efa55411d",
-      "sourceName": "src/parsers/TXInPreImageParserLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./BaseParserLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "TXInPreImageParserLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/parsers/BClaimsParserLibrary.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "a62a6fa1fa37be0afca01bc152f33930",
-      "sourceName": "src/parsers/BClaimsParserLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./BaseParserLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "BClaimsParserLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/AccusationLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "12feb0fcd5a0d4d11a4164d78dcb6490",
-      "sourceName": "src/diamonds/facets/AccusationLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./MerkleProofLibrary.sol",
-        "./ChainStatusLibrary.sol",
-        "./ParticipantsLibrary.sol",
-        "./SnapshotsLibrary.sol",
-        "../../parsers/PClaimsParserLibrary.sol",
-        "../../parsers/RCertParserLibrary.sol",
-        "../../parsers/MerkleProofParserLibrary.sol",
-        "../../parsers/TXInPreImageParserLibrary.sol",
-        "../../CryptoLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "AccusationLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/AccusationMultipleProposalFacet.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "a322ca5451c7799ae178a5b73236836a",
-      "sourceName": "src/diamonds/facets/AccusationMultipleProposalFacet.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./AccusationLibrary.sol",
-        "../interfaces/AccusationEvents.sol",
-        "../../SafeMath.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "AccusationMultipleProposalFacet"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/AccusationEvents.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "2606d649958d7f3f7f78725bc2221011",
-      "sourceName": "src/diamonds/interfaces/AccusationEvents.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "AccusationEvents"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Accusation.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "daab9d3d7b17544dd4f6e85cf9fe0a61",
-      "sourceName": "src/diamonds/interfaces/Accusation.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./AccusationEvents.sol",
-        "../../Registry.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "Accusation"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/AccusationInvalidTransactionConsumptionFacet.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "51037398d71b50bdde16a75f1d400a17",
-      "sourceName": "src/diamonds/facets/AccusationInvalidTransactionConsumptionFacet.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./AccusationLibrary.sol",
-        "../interfaces/AccusationEvents.sol",
-        "../../SafeMath.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "AccusationInvalidTransactionConsumptionFacet"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/governance/Proposals/GovernanceProposeModifySnapshot.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "c2ea7fcdbcfcf84d8bed0e86bd3fc274",
-      "sourceName": "src/governance/Proposals/GovernanceProposeModifySnapshot.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../GovernanceProposal.sol",
-        "../../diamonds/facets/SnapshotsLibrary.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "GovernanceProposeModifySnapshot"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/governance/GovernanceProposal.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "118c5a5bfb0b3e9ac3715ce205bd49fa",
-      "sourceName": "src/governance/GovernanceProposal.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./GovernanceStorage.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "GovernanceProposal"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/governance/Proposals/GovernanceProposeRestartETHDKG.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "f37a6fa35f4f00e8e8584b710256aa4c",
-      "sourceName": "src/governance/Proposals/GovernanceProposeRestartETHDKG.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../GovernanceProposal.sol",
-        "../../diamonds/facets/EthDKGLibrary.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "GovernanceProposeRestartETHDKG"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/EthDKGLibrary.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "d779cd07f83e120414854cd2bdb4b4ac",
-      "sourceName": "src/diamonds/facets/EthDKGLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../interfaces/Validators.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.4"
-      ],
-      "artifacts": [
-        "EthDKGLibrary"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Validators.sol": {
-      "lastModificationDate": 1638235373966,
-      "contentHash": "9052045ebf86ef247f280ee6bab9998f",
-      "sourceName": "src/diamonds/interfaces/Validators.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./Participants.sol",
-        "./Snapshots.sol",
-        "./Staking.sol",
-        "./ValidatorsEvents.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "Validators"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Participants.sol": {
-      "lastModificationDate": 1638235373966,
-      "contentHash": "7eabfedf0845f1c0e9ecea496aae5c00",
-      "sourceName": "src/diamonds/interfaces/Participants.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./ParticipantsEvents.sol",
-        "../../Registry.sol"
-      ],
-      "versionPragmas": [
-        ">=0.6.4"
-      ],
-      "artifacts": [
-        "Participants"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Snapshots.sol": {
-      "lastModificationDate": 1638235373966,
-      "contentHash": "d9ef4907664806f0d7346d5adc9f295f",
-      "sourceName": "src/diamonds/interfaces/Snapshots.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./SnapshotsEvents.sol",
-        "../../Registry.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "Snapshots"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Staking.sol": {
-      "lastModificationDate": 1638235373966,
-      "contentHash": "8d85c092894dac8bda153660774b7d6c",
-      "sourceName": "src/diamonds/interfaces/Staking.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./StakingEvents.sol",
-        "../../Registry.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "Staking"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/ValidatorsEvents.sol": {
-      "lastModificationDate": 1638235373966,
-      "contentHash": "b1ea47b73c7d15321a7f78e73e8e94db",
-      "sourceName": "src/diamonds/interfaces/ValidatorsEvents.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./StakingEvents.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "ValidatorsEvents"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/ParticipantsEvents.sol": {
-      "lastModificationDate": 1638235373966,
-      "contentHash": "1197b797f7e168bd172318c7070dddd9",
-      "sourceName": "src/diamonds/interfaces/ParticipantsEvents.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "ParticipantsEvents"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/migrate/MigrateETHDKG.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "f9a1681fcd42a034560495272afeaf41",
-      "sourceName": "src/diamonds/migrate/MigrateETHDKG.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../facets/AccessControlLibrary.sol",
-        "../facets/EthDKGLibrary.sol"
-      ],
-      "versionPragmas": [
-        ">=0.6.4"
-      ],
-      "artifacts": [
-        "MigrateETHDKG"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/migrate/MigrateSnapshotsFacet.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "cf341dabfa2e3aa451fec9081dfebf3c",
-      "sourceName": "src/diamonds/migrate/MigrateSnapshotsFacet.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../facets/AccessControlLibrary.sol",
-        "../facets/SnapshotsLibrary.sol",
-        "../../Constants.sol"
-      ],
-      "versionPragmas": [
-        ">=0.6.4"
-      ],
-      "artifacts": [
-        "MigrateSnapshotsFacet"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/SudoFacet.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "8202f5be45e65e9dc6ea7264dcd3e01c",
-      "sourceName": "src/diamonds/facets/SudoFacet.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./AccessControlLibrary.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "SudoFacet"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/facets/ParticipantsFacet.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "8ffc740e8f28530720200b73ac9efcd1",
-      "sourceName": "src/diamonds/facets/ParticipantsFacet.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../interfaces/Participants.sol",
-        "./AccessControlLibrary.sol",
-        "./ChainStatusLibrary.sol",
-        "./ParticipantsLibrary.sol",
-        "./StakingLibrary.sol",
-        "./StopLibrary.sol",
-        "../../Constants.sol",
-        "../../Registry.sol"
-      ],
-      "versionPragmas": [
-        ">=0.6.4"
-      ],
-      "artifacts": [
-        "ParticipantsFacet"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/governance/Proposals/GovernanceProposeEvictValidators.sol": {
-      "lastModificationDate": 1638235373970,
-      "contentHash": "c3e017bf24207e2f73b808a9d5069be6",
-      "sourceName": "src/governance/Proposals/GovernanceProposeEvictValidators.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../GovernanceProposal.sol",
-        "../../diamonds/facets/ParticipantsLibrary.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "GovernanceProposeEvictValidators"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/Deposit.sol": {
-      "lastModificationDate": 1639160873804,
-      "contentHash": "85e6ac53193f1656e345e719d704267d",
-      "sourceName": "src/Deposit.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../lib/ds-stop/stop.sol",
-        "./diamonds/interfaces/Token.sol",
-        "./diamonds/interfaces/ValidatorsEvents.sol",
-        "./Constants.sol",
-        "./Registry.sol",
-        "./SafeMath.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "Deposit"
-      ]
-    },
-    "/home/zj/work/mn/bridge/lib/ds-stop/stop.sol": {
-      "lastModificationDate": 1638235373746,
-      "contentHash": "7f2f829f6fe56cf565590f296c144cd2",
-      "sourceName": "lib/ds-stop/stop.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../ds-auth/auth.sol",
-        "../ds-note/note.sol"
-      ],
-      "versionPragmas": [
-        ">=0.4.23"
-      ],
-      "artifacts": [
-        "DSStop"
-      ]
-    },
-    "/home/zj/work/mn/bridge/lib/ds-note/note.sol": {
-      "lastModificationDate": 1638235373746,
-      "contentHash": "69b488115c4cf760eeae100eb13b5079",
-      "sourceName": "lib/ds-note/note.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.4.23"
-      ],
-      "artifacts": [
-        "DSNote"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/Token.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "85471b5c5268c04811f4e2df81db0b0e",
-      "sourceName": "src/Token.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../lib/ds-token/token.sol",
-        "./SimpleAuth.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "Token",
-        "TokenAuthority"
-      ]
-    },
     "/home/zj/work/mn/bridge/src/MadnetFactory.sol": {
-      "lastModificationDate": 1640032936908,
-      "contentHash": "b5378b6fbc09c1e5083bba4aff3ad94f",
+      "lastModificationDate": 1641312169220,
+      "contentHash": "da4b9bd82bf4a80e1b00be5548a1336c",
       "sourceName": "src/MadnetFactory.sol",
       "solcConfig": {
         "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -3561,138 +4309,33 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
       "imports": [
-        "../lib/utils/DeterministicAddress.sol",
-        "./SimpleAuth.sol"
+        "../lib/utils/DeterministicAddress.sol"
       ],
       "versionPragmas": [
         "^0.8.10"
       ],
       "artifacts": [
         "MadnetFacInterface",
-        "MadnetFactory"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/DirectGovernance.sol": {
-      "lastModificationDate": 1638235373962,
-      "contentHash": "191c7c31e30580e0c1514d930ab8f4ba",
-      "sourceName": "src/DirectGovernance.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./diamonds/interfaces/Governor.sol",
-        "./SimpleAuth.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "DirectGovernance"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/Governor.sol": {
-      "lastModificationDate": 1638235373966,
-      "contentHash": "ef55bcb9540f33b00eea5b6a68619ec2",
-      "sourceName": "src/diamonds/interfaces/Governor.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./GovernorEvents.sol",
-        "../../Registry.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "Governor"
-      ]
-    },
-    "/home/zj/work/mn/bridge/src/diamonds/interfaces/GovernorEvents.sol": {
-      "lastModificationDate": 1638235373966,
-      "contentHash": "361d56926544348e68c65d96e1d97f3b",
-      "sourceName": "src/diamonds/interfaces/GovernorEvents.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../Registry.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.15"
-      ],
-      "artifacts": [
-        "GovernorEvents"
+        "MadnetFactory",
+        "foo",
+        "utils"
       ]
     },
     "/home/zj/work/mn/bridge/src/diamonds/facets/EthDKGInitializeFacet.sol": {
@@ -3704,7 +4347,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -3713,12 +4356,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -3744,7 +4394,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -3753,12 +4403,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -3782,7 +4439,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -3791,12 +4448,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -3817,7 +4481,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -3826,12 +4490,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -3856,7 +4527,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -3865,12 +4536,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -3893,7 +4571,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -3902,12 +4580,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -3930,7 +4615,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -3939,12 +4624,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -3968,7 +4660,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -3977,12 +4669,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4008,7 +4707,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4017,12 +4716,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4048,7 +4754,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4057,12 +4763,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4088,7 +4801,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4097,12 +4810,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4126,7 +4846,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4135,12 +4855,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4163,7 +4890,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4172,12 +4899,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4202,7 +4936,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4211,12 +4945,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4237,7 +4978,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4246,12 +4987,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4275,7 +5023,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4284,12 +5032,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4312,7 +5067,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4321,12 +5076,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4349,7 +5111,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4358,12 +5120,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4387,7 +5156,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4396,12 +5165,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4422,7 +5198,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4431,12 +5207,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4449,6 +5232,46 @@
         "ERC165Library"
       ]
     },
+    "/home/zj/work/mn/bridge/src/foo.sol": {
+      "lastModificationDate": 1641298795256,
+      "contentHash": "c23f9e84f89358aa0f5023574ad6cc37",
+      "sourceName": "src/foo.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.10"
+      ],
+      "artifacts": []
+    },
     "/home/zj/work/mn/bridge/src/SignatureLibrary.sol": {
       "lastModificationDate": 1638235373962,
       "contentHash": "229617b86f53969eb2eea422b279bc50",
@@ -4458,7 +5281,7 @@
         "settings": {
           "optimizer": {
             "enabled": false,
-            "runs": 200
+            "runs": 0
           },
           "outputSelection": {
             "*": {
@@ -4467,12 +5290,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -4482,6 +5312,48 @@
       ],
       "artifacts": [
         "SignatureLibrary"
+      ]
+    },
+    "/home/zj/work/mn/bridge/src/tokens/interfaces/ICBCloser.sol": {
+      "lastModificationDate": 1638235373970,
+      "contentHash": "f998402919c4513a9eaeada7d59b681f",
+      "sourceName": "src/tokens/interfaces/ICBCloser.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 0
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ICBCloser"
       ]
     }
   }

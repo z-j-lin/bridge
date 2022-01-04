@@ -16,7 +16,7 @@
     "./scripts",
     "./src/**/*",
     "./typechain-types/**/*",
-    "**/*.ts",
+    "**/*.ts", "test/factoryDeploy.js",
   ],
   "files": ["./hardhat.config.ts"]
 }

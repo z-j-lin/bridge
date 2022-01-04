@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT-open-group
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.10;
 
 import "../../lib/openzeppelin/token/ERC20/ERC20Initializable.sol";
 import "../../lib/openzeppelin/proxy/utils/Initializable.sol";
@@ -67,17 +67,21 @@ contract MadByte is ERC20Initializable, Admin, Mutex, MagicEthTransfer, EthSafeT
     // Foundation contract address
     IMagicEthTransfer _foundation;
 
-    
+    constructor(bytes memory) {
+        _factory = msg.sender;
+    }
+
+    //TODO: change back to constructor
     function initialize(address admin_)public initializer {
         __ERC20_init("MadByte", "MB");
         __Admin_init(admin_);
         //the initializer will be called from the factory
         _factory = msg.sender;
         
-        _madStaking = IMagicEthTransfer(getSwitcherooContractAddress(bytes32("StakeNFT"), _factory));
-        _minerStaking = IMagicEthTransfer(getSwitcherooContractAddress(bytes32("ValidatorStakeNFT"), _factory));
-        _lpStaking = IMagicEthTransfer(getSwitcherooContractAddress(bytes32("StakeNFTLP"), _factory));
-        _foundation = IMagicEthTransfer(getSwitcherooContractAddress(bytes32("Foundation"), _factory));
+        _madStaking = IMagicEthTransfer(getMetamorphicContractAddress(bytes32("StakeNFT"), _factory));
+        _minerStaking = IMagicEthTransfer(getMetamorphicContractAddress(bytes32("ValidatorStakeNFT"), _factory));
+        _lpStaking = IMagicEthTransfer(getMetamorphicContractAddress(bytes32("StakeNFTLP"), _factory));
+        _foundation = IMagicEthTransfer(getMetamorphicContractAddress(bytes32("Foundation"), _factory));
 
         _minerStakingSplit = 333;
         _madStakingSplit = 332;

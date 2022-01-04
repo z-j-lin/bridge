@@ -15,243 +15,313 @@ contract foo {
 }
 
 interface MadnetFacInterface {
-    function deploy(
-    bytes32 _salt, 
-    bytes calldata _runtimeCode, 
-    bytes calldata _initiator
-    ) external payable returns (address contractAddr);
+    function deploy(address _implementation, bytes32 _salt, bytes calldata _initCallData) external payable returns (address contractAddr);
 }
 
 contract MadnetFactory is DeterministicAddress {
-    //emit an event when a contract is deployed
+
+    // owner role for priveledged access to functions
+    address public owner_;
+
+    // delegator role for priveledged access to delegateCallAny
+    address public delegator_;
+
+    //array to store list of contracts 
+    bytes32[] public contracts_;
+    
+    // slot for storing implementation address
+    address private implementation_;
+
+    // events that notify of contract deployment
     event Deployed(bytes32, address);
     event DeployedTemplate(address);
     event DeployedRaw(address);
-    event DeployedCopy(address);
 
-    // owner role for priveledged access to functions
-    address private owner_;
-    
-    // slot for storing the create2 address 
-    address private deploy2Addr_;
-    
-    // slot for storing implementation address
-    address implementation_;
-    
-    // address for copy code contract
-    address copyAddr_;
-
+    // modifier restricts caller to owner or self via multicall
     modifier onlyOwner() {
-        require(msg.sender == owner_ || msg.sender == address(this), "Functionality restricted to authorized operators.");
+        requireAuth(msg.sender == address(this) || msg.sender == owner_);
         _;
     }
-    
-    //array to store list of contracts 
-    bytes32[] contracts_;
 
-    //collection of authorized operators 
-    mapping(address => bool) private authorizedOperators_;
-    
-    //map contract names to addresses 
-    mapping(bytes32 => address) registry_;
-    
+    // modifier restricts caller to owner or self via multicall
+    modifier onlyOwnerOrDelegator() {
+        requireAuth(msg.sender == address(this) || msg.sender == owner_ || msg.sender == delegator_);
+        _;
+    }
+
+    // sets owner
     constructor() {
         owner_ = msg.sender;
+        delegator_ = msg.sender;
     }
 
-    // function to strip out the first 32 bytes of call data as target for delegatecall
-    //bare delegate call use rest of call data as input
-    function CallStrip(bytes[] calldata cdata) private {
-
-        assembly{
-            let ptr := mload(0x40)
-            calldatacopy(ptr, cdata.offset, cdata.length)
-            if iszero(delegatecall(gas(), mload(ptr), add(ptr, 0x20), sub(cdata.length,0x20), 0x00, 0x00)){
-                returndatacopy(0x00, 0x00, returndatasize())
-                revert(0x00, 0x00)
-            }
-        }
-
+    // update owner
+    function setOwner(address _new) public onlyOwner {
+        owner_ = _new;
     }
 
-    //rewrite the uups reverse proxies with constructors 
-    function multicall(bytes[] calldata cdata) external onlyOwner returns (bytes memory) {
-            // declare free mem ptr out of loop
-            uint256 ptr;
-            assembly {
-                ptr := mload(0x40)
-            }
-            // do all but last call
-            uint256 i;
-            for (; i < cdata.length - 1 ; i++) { 
-                bytes calldata obj = cdata[i];
-                assembly{
-                    calldatacopy(ptr, obj.offset, obj.length)
-                    let ret := call(gas(), address(), 0, ptr, obj.length, 0x00, 0x00)
-                    if iszero(ret) {
-                        returndatacopy(0x00, 0x00, returndatasize())
-                        revert(0x00, returndatasize())
-                    }
-                }
-            }
-            {
-            // do last call
-            // this is loop unwinding and saves gas on use due to last call
-            // being only call that return is called
-            // this saves the check operation for last call in loop
-            bytes calldata obj = cdata[i];
-            assembly{
-                    calldatacopy(ptr, obj.offset, obj.length)
-                    let ret := call(gas(), address(), 0, ptr, obj.length, 0x00, 0x00)
-                    if iszero(ret) {
-                        returndatacopy(0x00, 0x00, returndatasize())
-                        revert(0x00, returndatasize())
-                    }
-                    returndatacopy(0x00, 0x00, returndatasize())
-                    return(0x00, returndatasize())
-                    
-            }
-            }
+    // update delegator
+    function setDelegator(address _new) public onlyOwner {
+        owner_ = _new;
     }
 
-    function setImplementation(address _implementation) onlyOwner public {
-        implementation_ = _implementation;
-    }
-
-    function deploy(
-        bytes32 _salt,
-        bytes calldata _initiator
-    ) 
-    public onlyOwner returns (address) {
-        // declare contract address for assignment in assembly block
-        address contractAddr;
+    /**  
+    * @dev delegateCallAny allows the logic of this contract to be updated
+    * in the event that our update/deploy mechanism is invalidated
+    * this function poses a risk, but does not grant any additional
+    * capability beyond that which is present due to other features 
+    * present at this time
+    * @param _target: the address of the contract to call
+    * @param _cdata: the call data for the delegate call
+    */
+    function delegateCallAny(address _target, bytes calldata _cdata) public onlyOwnerOrDelegator {
+        bytes memory cdata = _cdata;
+        delegateCallAnyInternal(_target, cdata);
         assembly {
-            let ptr := mload(0x40)
-            mstore(ptr, shl(24, 0x59595959335afa503d59593e3434343434515af4503d34343e3d34f3fe))
-            contractAddr := create2(0, ptr, 0x29, _salt)
-            if iszero(extcodesize(contractAddr)){
-                revert(0x00, 0x00)
+            returndatacopy(0x00, 0x00, returndatasize())
+            return(0x00, returndatasize())
+        }
+    }
+    /**  
+    * @dev callAny allows the logic of this contract to be updated
+    * in the event that our update/deploy mechanism is invalidated
+    * this function poses a risk, but does not grant any additional
+    * capability beyond that which is present due to other features 
+    * present at this time
+    * @param _target: the address of the contract to call
+    * @param _value: value to send with the call
+    * @param _cdata: the call data for the delegate call
+    */
+    function callAny(address _target, uint256 _value, bytes calldata _cdata) public onlyOwner {
+        bytes memory cdata = _cdata;
+        callAnyInternal(_target, _value, cdata);
+        assembly {
+            returndatacopy(0x00, 0x00, returndatasize())
+            return(0x00, returndatasize())
+        }
+    }
+    
+    /**  
+    * @dev multiCall allows EOA to make multiple function calls within a single transaction,
+    * this allows functionalities of the factory to be more atomic and flexible 
+    * @param _cdata: array of function calls 
+    * returns the result of the last call 
+    */
+    function multiCall(bytes[] calldata _cdata) external onlyOwner {
+        for (uint256 i = 0; i < _cdata.length; i++) {
+            bytes memory cdata = _cdata[i];
+            callAnyInternal(address(this), 0, cdata);
+        }
+        assembly {
+            returndatacopy(0x00, 0x00, returndatasize())
+            return(0x00, returndatasize())
+        }
+    }
+    /**  
+    * @dev deploy 
+    * @param _implementation the implementation contract address, to copy runtime code from.
+    if the 0 address is used, the last addressed stored on the global state is used    
+    * @param _salt salt used for create2 param, (ascii representation of the contract name padded to 32 bytes) 
+    * @param _initCallData call data used for making a initialization call to initializable contracts 
+    * @return contractAddr the address of the created contract 
+    */
+    function deploy(address _implementation, bytes32 _salt, bytes calldata _initCallData) public payable onlyOwner returns (address contractAddr) {
+        assembly {
+            // store non-zero address as implementation,
+            if iszero(iszero(_implementation)) {
+                    sstore(implementation_.slot, _implementation)
             }
-            if iszero(iszero(_initiator.length)) {
+            let ptr := mload(0x40)
+            // put metamorphic code as initcode
+            mstore(ptr, shl(72, 0x6020363636335afa1536363636515af43d36363e3d36f3))
+            contractAddr := create2(0, ptr, 0x17, _salt)
+            if and(iszero(contractAddr), iszero(_initCallData.length)) {
                 //copy the arguement over from the call data in the context of the deploy function call
-                calldatacopy(ptr, add(_initiator.offset, 0x20), _initiator.length)
-                if iszero(call(gas(), contractAddr, 0, ptr, _initiator.length, 0, 0)) {
-                    revert(0x00, 0x00)
+                calldatacopy(ptr, _initCallData.offset, _initCallData.length)
+                if iszero(call(gas(), contractAddr, 0, ptr, _initCallData.length, 0x00, 0x00)) {
+                    revert(0x00, returndatasize())
                 }
             }
         }
+        codeSizeZeroRevert(uint160(contractAddr) != 0);
         //add the salt to the list of contract names
         contracts_.push(_salt);
-        //add the address to contract address mapping 
-        registry_[_salt] = contractAddr; 
         emit Deployed(_salt, contractAddr);
         return contractAddr;
     }
 
-    //retrieves the address of the contract specified by its name 
+    /**  
+    * @dev requireAuth 
+    * @param _ok 
+    */
+    function requireAuth(bool _ok) internal pure {
+        require(_ok, "unauthorized");
+    }
+
+    /**  
+    * @dev codeSizeZeroRevert 
+    * @param _ok     
+    */
+    function codeSizeZeroRevert(bool _ok) internal pure {
+        require(_ok, "csize0");
+    }
+ 
+    /**  
+    * @dev getContractAddress retrieves the address of the contract specified by its 32 byte salt derived from its name  
+    * @param _salt      
+    */
     function getContractAddress(bytes32 _salt) external view returns (address) {
         return getMetamorphicContractAddress(_salt, address(this));
     }
-
-    //returns the length of the contracts array 
+ 
+    
+    /**  
+    * @dev getNumContracts retrieves the address of the contract specified by its 32 byte salt derived from its name  
+    * @param _salt      
+    */
     function getNumContracts() external view returns (uint256) {
-    return contracts_.length;
+        return contracts_.length;
     }
 
     //returns implementation contracts address
-    function deployTemplate(bytes calldata deployCode_) public onlyOwner returns (address) {
-        address contractAddr;
+    /**  
+    * @dev deployTemplate deploys intermediate contract with the implementation contracts deploy code as its runtime code
+    such that the implemention runtime code is returned using its constructor, if a bare empty delegate call is made into it
+    with the factory as msg.sender. The intermediate contract will self destruct if a call is made with a none zero call data is made into it 
+    with the factory as msg.sender.   
+    * @param deployCode_ the deploy code of the implementation contract. the contract must have a constructor and the constructor must be the last      
+    */
+    function deployTemplate(bytes calldata deployCode_) public onlyOwner returns (address contractAddr) {
         assembly{
             //get the next free pointer
             let basePtr := mload(0x40)
             let ptr := basePtr
-            
-            //codesize, PC,  pc, codecopy, codesize, push1 09, return
-            mstore(ptr, shl(192, 0x38585839386009f3))
-            ptr := add(ptr, 0x08)
-
+            //codesize, PC,  pc, codecopy, codesize, push1 09, return push2
+            mstore(ptr, shl(168, or(0x38585839386009f3610000, deployCode_.length)))
+            ptr := add(ptr, 0x0b)
             // modify runtime to contain the tail jump operation
-            // 61 <codesize other> 56 5b 
-            mstore8(ptr, 0x61)
-            ptr := add(ptr, 0x01)
+            // <codesize other> 56 5b 
             // account for array offset
-            mstore(ptr, shl(240, deployCode_.length))
-            ptr := add(ptr, 0x02)
             mstore8(ptr, 0x56)
             ptr := add(ptr, 0x01)
             mstore8(ptr, 0x5b)
             ptr := add(ptr, 0x01)
-
             //copies the initialization code of the implementation contract
-            //TODO: change the runtimeCode_ variable name to impInitCode_
             calldatacopy(ptr, add(0x05, deployCode_.offset), sub(deployCode_.length, 0x05))
-
-            //Move the ptr to the end of the code in memory
-            ptr := add(ptr, deployCode_.length)
-
+            // Move the ptr to the end of the code in memory
             // account for the previously added values to offset the copy
-            ptr := sub(ptr, 0x05)
-
             // account for the need to change the constructor dynamic byte array
-            ptr := sub(ptr, 0x20)
-            
+            ptr := add(ptr, sub(deployCode_.length, 0x25))
             // store the length of the initcode modifier
             mstore(ptr, 0x28)
             ptr := add(ptr, 0x20)
-
             // finish the code with the terminate sequence  
             // 5b 60 80 60 40 52 60 05 33 73 <factory> 14 15 57 33 ff fe
-            mstore(ptr, or(or(shl(192,0x5b60806040523373), shl(32, address())), 0x14156004))
+            mstore(ptr, or(or(shl(192, 0x5b60806040523373), shl(32, address())), 0x14156004))
             ptr := add(ptr, 0x20)
             mstore(ptr, shl(192, 0x57361560045733ff))
             ptr := add(ptr, 0x08)
             contractAddr := create(0, basePtr, sub(ptr, basePtr))
-            if iszero(extcodesize(contractAddr)){
-                revert(0x00, 0x00)
-            }
         }
+        codeSizeZeroRevert(uint160(contractAddr) != 0);
         emit DeployedTemplate(contractAddr);
         implementation_ = contractAddr;
         return contractAddr;      
     }
+    /**  
+    * @dev deployCreate deploys a contract from the factory address using create
+    * @param _deployCode bytecode to deploy using create
+    */
 
-
-    //returns implementation contracts address
-    function deployRaw(bytes calldata deployCode_) public onlyOwner returns (address) {
-        address contractAddr;
+    function deployCreate(bytes calldata _deployCode) public onlyOwner returns (address contractAddr) {
         assembly{
             //get the next free pointer
             let basePtr := mload(0x40)
             let ptr := basePtr
             
             //copies the initialization code of the implementation contract
-            calldatacopy(ptr, deployCode_.offset, deployCode_.length)
+            calldatacopy(ptr, _deployCode.offset, _deployCode.length)
 
             //Move the ptr to the end of the code in memory
-            ptr := add(ptr, deployCode_.length)
+            ptr := add(ptr, _deployCode.length)
             
             contractAddr := create(0, basePtr, sub(ptr, basePtr))
-            if iszero(extcodesize(contractAddr)){
-                revert(0x00, 0x00)
-            }
         }
+        codeSizeZeroRevert(uint160(contractAddr) != 0);
         emit DeployedRaw(contractAddr);
         return contractAddr;        
     }
 
-    //this is used to destroy the deploy template contract after code is copied to switcheroo
+    /**  
+    * @dev deployCreate2 deploys a contract from the factory address using create
+    * @param _value endowment value for created contract
+    * @param _salt salt for create2 deployment, used to distinguish contracts deployed from this factory 
+    * @param _deployCode bytecode to deploy using create2
+    */
+    function deployCreate2(uint256 _value, bytes32 _salt, bytes calldata _deployCode) public payable onlyOwner returns (address contractAddr) {
+        assembly{
+            //get the next free pointer
+            let basePtr := mload(0x40)
+            let ptr := basePtr
+            
+            //copies the initialization code of the implementation contract
+            calldatacopy(ptr, _deployCode.offset, _deployCode.length)
+
+            //Move the ptr to the end of the code in memory
+            ptr := add(ptr, _deployCode.length)
+            
+            contractAddr := create2(_value, basePtr, sub(ptr, basePtr), _salt)
+        }
+        codeSizeZeroRevert(uint160(contractAddr) != 0);
+        emit DeployedRaw(contractAddr);
+        return contractAddr;        
+    }
+
+    // destroy calls selfdestruct on the template contract after code is
+    // written to deterministic address
     function destroy(address contractAddr) public onlyOwner {
         assembly{
-            let ret := call(gas(), contractAddr, 0, 0x40, 0x20, 0x00, 0x00) 
-            if iszero(ret){
-                revert(0x00, 0x00)
+            if iszero(contractAddr) {
+                contractAddr := sload(implementation_.slot)
             }
-            if iszero(iszero(extcodesize(contractAddr))) {
+            let ret := call(gas(), contractAddr, 0, 0x40, 0x20, 0x00, 0x00) 
+            if iszero(ret) {
                 revert(0x00, 0x00)
             }
         }
     }
 
+    function delegateCallAnyInternal(address _target, bytes memory cdata) internal {
+        assembly{
+            let size := mload(cdata)
+            let ptr := add(0x20, cdata)
+            if iszero(delegatecall(gas(), _target, ptr, size, 0x00, 0x00)) {
+                returndatacopy(0x00, 0x00, returndatasize())
+                revert(0x00, returndatasize())
+            }
+        }
+    }
+
+    function callAnyInternal(address _target, uint256 _value, bytes memory cdata) internal {
+        assembly{
+            let size := mload(cdata)
+            let ptr := add(0x20, cdata)
+            if iszero(call(gas(), _target, _value, ptr, size, 0x00, 0x00)) {
+                returndatacopy(0x00, 0x00, returndatasize())
+                revert(0x00, returndatasize())
+            }
+        }
+    }
+
+    fallback() external {
+        assembly {
+            mstore(returndatasize(), sload(implementation_.slot))
+            return(returndatasize(), 0x20)
+        }
+    }
+}
+
+contract utils {
     function checkcodeSize(address target) public view returns (uint256) {
         uint256 csize;
         assembly{
@@ -259,12 +329,4 @@ contract MadnetFactory is DeterministicAddress {
         }
         return csize;
     }
-    
-    fallback() external {
-        assembly {
-            mstore(returndatasize(), sload(implementation_.slot))
-            return(returndatasize(), 0x20)
-        }
-    }
-
 }
