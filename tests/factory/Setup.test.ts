@@ -22,7 +22,6 @@ export const mockBase = artifacts.require(MOCK);
 export const mockInitBase = artifacts.require(MOCK_INITIALIZABLE);
 export const mockFactoryBase = artifacts.require("MockFactory");
 
-
 export async function getAccounts() {
   let signers = await ethers.getSigners();
   let accounts = [];

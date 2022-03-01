@@ -37,8 +37,8 @@ describe("Multicall deploy proxy", () => {
     firstOwner = accounts[0];
     secondOwner = accounts[1];
     firstDelegator = accounts[2];
-    let UtilsBase = await ethers.getContractFactory("Utils")
-    utilsContract = await UtilsBase.deploy();
+    let utilsFactory = await ethers.getContractFactory("Utils")
+    utilsContract = await utilsFactory.deploy();
     factory = await deployFactory(MADNET_FACTORY);
     let cSize = await utilsContract.getCodeSize(factory.address);
     expect(cSize.toNumber()).to.be.greaterThan(0);
@@ -100,8 +100,6 @@ describe("Multicall deploy proxy", () => {
   });
 
   it("multicall deployproxy, deploytemplate, deploystatic, upgradeproxy, expect success", async () => {
-    let UtilsBase: Utils__factory = await ethers.getContractFactory("Utils")
-    let utilsContract = await UtilsBase.deploy();
     let endPoint = await endPointBase.new(factory.address);
     let proxySalt = getSalt();
     let mockCon = await ethers.getContractFactory("Mock");
@@ -158,8 +156,6 @@ describe("Multicall deploy proxy", () => {
   });
 
   it("multicall deploytemplate, deploystatic", async () => {
-    let UtilsBase: Utils__factory = await ethers.getContractFactory("Utils")
-    let utilsContract = await UtilsBase.deploy();
     let Salt = getSalt();
     //ethers instance of Mock contract abstraction
     let mockCon = await ethers.getContractFactory("Mock");

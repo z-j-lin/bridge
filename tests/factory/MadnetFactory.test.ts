@@ -30,21 +30,19 @@ import { ethers, artifacts } from "hardhat";
 import { BytesLike, ContractFactory } from "ethers";
 import { MadnetFactory, Utils } from "../../typechain-types";
 describe("Madnet Contract Factory", () => {
-  let utilsBase
   let firstOwner: string;
   let secondOwner: string;
   let firstDelegator: string;
   let accounts: Array<string> = [];
   let utilsContract: Utils;
   let factory: MadnetFactory;
-
   beforeEach(async () => {
     accounts = await getAccounts();
     firstOwner = accounts[0];
     secondOwner = accounts[1];
     firstDelegator = accounts[2];
-    let UtilsBase = await ethers.getContractFactory("Utils")
-    utilsContract = await UtilsBase.deploy();
+    let utilsFactory = await ethers.getContractFactory("Utils")
+    utilsContract = await utilsFactory.deploy();
     factory = await deployFactory(MADNET_FACTORY);
     let cSize = await utilsContract.getCodeSize(factory.address);
     expect(cSize.toNumber()).to.be.greaterThan(0);

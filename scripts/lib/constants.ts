@@ -18,7 +18,12 @@ export const CONTRACT_ADDR = "contractAddr";
 export const MADNET_FACTORY = "MadnetFactory";
 export const MOCK = "Mock";
 export const RECEIPT = "receipt";
-
+export const DEPLOY_CREATE = "deployCreate";
+export const DEPLOY_CREATE2 = "deployCreate2";
+export const DEPLOY_PROXY = "deployProxy";
+export const DEPLOY_TEMPLATE = "deployTemplate";
+export const DEPLOY_STATIC = "deployStatic";
+export const UPGRADE_PROXY = "upgradeProxy";
 
 export const env = (): string => {
     let _env = process.env["DEPLOYMENT_ENVIRONMENT"]

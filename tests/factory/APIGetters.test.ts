@@ -24,13 +24,12 @@ describe("Madnetfactory API test", async () => {
   let factory: MadnetFactory;
 
   beforeEach(async () => {
-    let utilsBase = await ethers.getContractFactory("Utils");
+    let utilsFactory = await ethers.getContractFactory("Utils");
     accounts = await getAccounts();
     //set owner and delegator
     firstOwner = accounts[0];
     firstDelegator = accounts[1];
-
-    utilsContract = await utilsBase.deploy();
+    utilsContract = await utilsFactory.deploy();
     factory = await deployFactory(MADNET_FACTORY);
     let cSize = await utilsContract.getCodeSize(factory.address);
     expect(cSize.toNumber()).to.be.greaterThan(0);
